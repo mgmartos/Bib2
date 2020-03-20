@@ -1,0 +1,199 @@
+﻿
+
+h1 {color:darkgray;}
+h2 {
+    color:ThreeDDarkShadow;
+    background-color:transparent;
+    font-family :Tahoma;
+    font-size :xx-large;
+    text-align:center;
+}
+p {
+    color: #8e44ad;
+}
+
+
+
+legend {
+    color: darkred;
+    background-color: transparent;
+    color: darkred;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 34px;
+    display: block;
+    margin-bottom: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 100px;
+}
+
+.center-block {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.borde-inferior {
+    background-color: transparent;
+    border-bottom: 0px solid #333;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    width: 100%;
+}
+
+label {color:black; 
+       background-color:transparent;
+       font-family: "Times New Roman", Times, serif;
+       font-style:normal;
+      font-size:large;
+    text-align: right;
+}
+
+ input[type=text], input[type=date], input[type=number]
+ select {
+    background-color: transparent;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 12px;
+    border-style: groove;
+    border-width: 1px;
+    border-collapse: separate;
+    padding-left: 20px;
+    vertical-align: central;
+}
+
+
+.textogrande {
+    background-color: transparent;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 24px;
+    border-style: none;
+    border-width: 1px;
+    border-collapse: separate;
+    padding: 15px;
+}
+
+.row {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.block1 {
+    width: 10%;
+    float: left;
+    /*display: inline-block;*/
+    margin-right: 6px;
+}
+.block2 {
+    width: 30%;
+    /*float: left;*/
+    display: inline-block;
+    margin-right: 6px;
+}
+.block3 {
+    width: 10%;
+    /*float: left;*/
+    display: inline-block;
+    margin-right: 6px;
+    color:aqua;
+}
+
+.cabeceraBaja {
+    font-family: "Open Sans",sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #BA2F1D;
+    color: #ffffff;
+    height: 25px;
+    text-align: center;
+}
+
+.cabeceraPeque {
+    font-family: "Open Sans",sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    background-color: #BA2F1D;
+    color: #ffffff;
+    text-align: center;
+}
+
+.celdaBlanca {
+    font-family: "Open Sans",sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    color: #333333;
+    height: 22px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.celdaBlanca15 {
+    font-family: "Open Sans",sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #BA2F1D;
+    height: 22px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.celdaRosa {
+    font-family: "Open Sans",sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    background-color: #F7D3CE;
+    color: #333333;
+    height: 22px;
+    text-align: center;
+}
+
+.celdaBlancaBorde {
+    font-family: "Open Sans",sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    color: #333333;
+    height: 22px;
+    border-bottom: solid 1px #B21F0B;
+    text-align: center;
+}
+
+.celdaRosaBorde {
+    font-family: "Open Sans",sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    background-color: #F7D3CE;
+    color: #333333;
+    height: 22px;
+    border-bottom: solid 1px #B21F0B;
+    text-align: center;
+}
+
+.cursiva {
+    font-style: italic;
+    border : 1px solid #888;
+    padding: 0.5em;
+    margin:0.5em 0;
+    background-color:#ffc;
+}
+.hover_row {
+    background-color: #FDCB0A;
+}
+a.mailto {
+    background:url('img/email.png') no-repeat content-box;
+}
+.error {
+    border-bottom-style : double;
+    border-width : 3px;
+    border-color : red;
+}
+
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('~/img/cargando.png') 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+}
+

@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Autores</h2>
+<div id="Principal" style="">
+
+    <div id="Iniciales" align="center" style="padding-left: 9%;">
+        <fieldset>
+
+            <ul id="Inicial" align="center">
+                @{
+                    for (char c = 'A'; c <= 'Z'; c++)
+                    {
+                        <li class="horizontal">
+                            <a>
+                                @Html.ActionLink(c.ToString(), "Autores", new { letra = c })
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </fieldset>
+    </div>
+    <div id="ListaAutores" align="center">
+        <table id="tAutores" style="width:50%; border:thin" align="center">
+            <tr>
+                <th style="width:10.00%">Cod.</th>
+                <th style="width:75.00%">Autor</th>
+                <th style="width:15.00%">Nº Libros</th>
+            </tr>
+            @foreach (Bib2.Models.AutoresL autor in Model)
+            {
+                <tr>
+                    <td>@autor.idAutor</td>
+                    <td style="text-decoration:none">@Html.ActionLink(@autor.NombreAutor, "LibrosAutor", new { codigo = @autor.idAutor })</td>
+                    <td align="center">@autor.Cantidad</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Volver", "index")
+</p>

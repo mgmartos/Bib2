@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "Libros Autor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@*<script type="text/javascript">
+        debugger
+        $(window).load(function () {
+            $(".loader").fadeOut("slow");
+        });
+    </script>
+    <div class="loader" style="padding-left:10%">
+        <img src="~/img/cargando.png" height="25%" width="25%" />
+
+    </div>*@
+<script>
+    var DetailURL = '/Home/_Libro';
+    $(function () {
+        $(".anchorDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: DetailURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "codigo": id},
+                datatype: "json",
+                success: function (data) {
+                    //   debugger;
+                    $('#myModalC').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert(id);
+                    alert(DetailURL);
+                    alert("Fallo en la carga del contenido dinámico.");
+                }
+            });
+        });
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+</script>
+
+<h2>Libros de @ViewData["NomAutor"]</h2>
+
+
+<div id="Principal" style="">
+
+    <div class="modal fade col-12" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                @*<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">DETALLE</h4>
+                </div>*@
+                <div id='myModalC'>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div id="divLibros">
+        <table id="tLibros" style="width:90%; border:thin" align="center">
+            <tr>
+                <th style="width:5.00%">Código</th>
+                <th style="width:70.00%">Título</th>
+                <th style="width:15.00%">Tema</th>
+                <th style="width:10.00%">Pág.</th>
+            </tr>
+            @foreach (Bib2.Models.mlib libro in @Model)
+            {
+        <tr>
+            <td>@Html.DisplayFor(Model => libro.idLibro)</td>
+            <td>@Html.DisplayFor(Model => libro.titulo)</td>
+            <td>@Html.DisplayFor(Model => libro.tema)</td>
+            <td>@Html.DisplayFor(Model => libro.paginas)</td>
+            <td align="center"><a href="javascript:void(0);" class="anchorDetail" id="ver" data-id="@libro.idLibro">Ver</a>  </td>
+        </tr>
+            }
+        </table>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Volver", "Autores", new { letra = @ViewData["NomAutor"].ToString()[0].ToString() })
+
+</p>
+

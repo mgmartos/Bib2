@@ -1,0 +1,96 @@
+﻿@model List<Bib2.Models.mlib>
+@{
+    ViewBag.Title = "Libros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    var DetailURL = '/Home/_Libro';
+    $(function () {
+        $(".anchorDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: DetailURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "codigo": id},
+                datatype: "json",
+                success: function (data) {
+                    //   debugger;
+                    $('#myModalC').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert(id);
+                    alert(DetailURL);
+                    alert("Fallo en la carga del contenido dinámico.");
+                }
+            });
+        });
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+</script>
+
+
+
+<h2>Libros</h2>
+<div id="Principal" style="">
+    <div class="modal fade col-12" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalC'>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Iniciales" align="center" style="padding-left: 9%;">
+
+
+        <fieldset>
+            <ul id="Inicial" align="center">
+                @{
+                    for (char c = 'A'; c <= 'Z'; c++)
+                    {
+                        <li class="horizontal">
+                            <a>
+                                @Html.ActionLink(c.ToString(), "Libros", new { letra = c })
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </fieldset>
+    </div>
+    <div id="ListaLibros" align="center">
+        <table id="tLibros" style="width:80%; border:thin" align="center">
+            <tr>
+                <th style="width:10.00%" align="center">Código</th>
+                <th style="width:60.00%" align="center">Título</th>
+                <th style="width:30.00%" align="center">Autor</th>
+                @*<th style="width:5.00%" align="center"></th>*@
+            </tr>
+            @foreach (Bib2.Models.mlib libro in Model)
+            {
+                <tr>
+                    <td align="center">@Html.DisplayFor(modelItem => libro.idLibro)</td>
+                    <td align="left"><a href="javascript:void(0);" class="anchorDetail" id="ver" data-id="@libro.idLibro">@Html.DisplayFor(modelItem => libro.titulo)</a></td>
+                    <td>@Html.DisplayFor(modelItem => libro.autor)</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Volver", "index")
+</p>
+

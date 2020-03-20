@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title -Biblos MGM ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/estilo1.css" />
+    <link rel="stylesheet" href="~/css/S_Tablas.css" />
+    <script type="text/javascript" src="~/scripts/ToolsJquery.js"></script>
+
+
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+    <style>
+        body {
+            font-size: 90%;
+        }
+
+        li {
+            font-size: 2.0em;
+        }
+
+        th, td, a {
+            font-size: 1.0em;
+            font-weight: bold;
+        }
+
+        /* fin de zona común a todas las resoluciones */
+        @@media screen and (min-width:768px) {
+            body {
+                font-size: 100%;
+                /* ampliamos los textos si mide más de 800px */
+            }
+
+            li {
+                font-size: 1.5em;
+            }
+
+            th, td, a {
+                font-size: 1.0em;
+                font-weight: normal;
+            }
+        }
+
+        /* fin de la zona para más de 800px de ancho de pantalla */
+        @@media screen and (min-width:1200px) {
+            body {
+                font-size: 140%;
+                /* ampliamos más aún los textos si mide más de 1200px */
+            }
+
+            li {
+                font-size: 1.0em;
+            }
+
+            th, td, a {
+                font-size: 1.1em;
+                font-weight: normal;
+            }
+            /* fin de la zona para más de 1200px de ancho de pantalla */
+        }
+    </style>
+
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Biblos 2020 ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Autores", "autores", "Home")</li>
+                    <li>@Html.ActionLink("Libros", "Libros", "Home")</li>
+                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer style="padding-left:5%">
+            <p>&copy; @DateTime.Now.Year - Biblos MGM</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
