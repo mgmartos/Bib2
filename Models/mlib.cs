@@ -23,7 +23,9 @@ namespace Bib2.Models
         public string titulo { get; set; }
         [Display(Name = "Autor")]
         public string autor { get; set; }
+        [Display(Name = "Editorial")]
         public string editorial { get; set; }
+        [Display(Name = "Colección")]
         public string coleccion { get; set; }
         public Nullable<System.DateTime> fecha { get; set; }
         [Display(Name = "Temática")]

@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "Nuevo Libro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Bib2.Models.mlib
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#numobras').val('1');
+        $('#autores').change(function (e) {
+            $('#CodAutor').val($(this).val());
+            $('#autor').val($(this).find("option:selected").text());
+        });
+        $('#temas').change(function (e) {
+            $('#tema').val($(this).find("option:selected").text());
+        });
+
+        $('#origen').focus(function (e) {
+
+            if ($(this).val().length == 0)
+                $(this).val('MGM');
+        });
+        $('#calificacion').change(function (e) {
+            if ($(this).val() == '-1')
+                $(this).val('');
+        });
+        $('#SelectOrigen').change(function (e) {
+
+            $('#origen').val($(this).val());
+        });
+    });                       // fin de Ready
+</script>
+
+
+
+@using (Html.BeginForm())
+{
+    if (ViewBag.Modificar == 0)
+    {
+        <h2>Nuevo Libro</h2>
+    }
+    if (ViewBag.Modificar == 1)
+    {
+        <h2 align="left">Modificar Libro</h2>
+    }
+
+    @*idLibro,titulo,autor,editorial,coleccion,fecha,tema,calificacion,paginas,comentario,prestamo,fecha_prestamo,numobras,origen,CodAutor*@
+    @Html.AntiForgeryToken()
+    <div style="font-size:small; width:50%" align="left">
+        <fieldset>
+            <legend>@Html.DisplayNameFor(model => model.titulo)</legend>
+            <div class="borde-inferior" style="padding-bottom:10px">
+                @*@Html.EditorFor(Model => Model.idLibro, new { htmlAttributes = new { style = "width: 15%" }, })
+                    @if (string.IsNullOrEmpty(@Model.titulo))
+                    {
+                        @Html.LabelFor(model => model.idLibro)
+                        @Html.TextBox("",@Model.idLibro)
+                    }*@
+
+                @Html.EditorFor(Model => Model.titulo, new { htmlAttributes = new { style = "width:100%" }, })
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>@Html.DisplayNameFor(model => model.autor)</legend>
+            <div class="borde-inferior" style="padding-bottom:10px">
+                <div style="padding-bottom:10px">
+                    @Html.EditorFor(Model => Model.CodAutor, new { htmlAttributes = new { style = "width: 10%;" }, })
+                    @Html.EditorFor(Model => Model.autor, new { htmlAttributes = new { style = "width: 90%;" }, })
+                </div>
+                <div id="DropDown">
+                    @Html.DropDownList("autores")
+                </div>
+
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>@Html.DisplayNameFor(Model => Model.editorial)</legend>
+            <div class="borde-inferior" style="padding-bottom:10px">
+                @Html.EditorFor(Model => Model.editorial, new { htmlAttributes = new { style = "width:75%" }, })
+            </div>
+        </fieldset>
+        <div>
+            <fieldset style="padding-bottom:10px">
+                <legend>@Html.DisplayNameFor(Model => Model.coleccion)</legend>
+                <div class="borde-inferior" style="padding-bottom:10px;">
+                    @Html.EditorFor(Model => Model.coleccion, new { htmlAttributes = new { style = "width:100%" }, })
+                </div>
+            </fieldset>
+        </div>
+        <div>
+            <fieldset style="padding-left:10px; ">
+                <legend>@Html.DisplayNameFor(Model => Model.fecha)</legend>
+                <div class="borde-inferior">
+                    <input type="date" id="fecha" name="Fecha">
+                </div>
+            </fieldset>
+
+
+            <fieldset style="padding-left:10px">
+                <legend>@Html.DisplayNameFor(Model => Model.tema)</legend>
+                <div class="borde-inferior">
+                    @Html.EditorFor(Model => Model.tema, new { htmlAttributes = new { style = "display: none" }, })
+                    @Html.DropDownList("temas")
+                </div>
+            </fieldset>
+        </div>
+        <div>
+            <fieldset style="float:left;padding-left:10px">
+                <legend>@Html.DisplayNameFor(Model => Model.calificacion)</legend>
+                <div class="borde-inferior">
+                    <input type="number" id="calificacion" name="calificacion" min="0" max="10">
+                </div>
+            </fieldset>
+
+
+            <fieldset style="padding-left:30px">
+                <legend>@Html.DisplayNameFor(Model => Model.paginas)</legend>
+                <div class="borde-inferior">
+                    <input type="number" id="paginas" name="paginas" min="50" max="2000">
+                </div>
+                <div class="borde-inferior">
+                    @Html.EditorFor(Model => Model.origen, new { htmlAttributes = new { style = "display: none" }, })
+                    <select name="SelectOrigen">
+                        <option value="MGM">MGM</option>
+                        <option value="MJCF">MJCF</option>
+                        <option value="AGC">AGC</option>
+                        <option value="JCB">JCB</option>
+                    </select>
+                </div>
+            </fieldset>
+        </div>
+        <div>
+            <fieldset style="padding-left:10px">
+                <legend>@Html.DisplayNameFor(Model => Model.comentario)</legend>
+                <div class="borde-inferior">
+                    @Html.EditorFor(Model => Model.comentario, new { htmlAttributes = new { style = "width:100%" }, })
+                </div>
+            </fieldset>
+        </div>
+
+
+        <div style="display:none">
+            @Html.EditorFor(Model => Model.prestamo)
+            @Html.EditorFor(Model => Model.fecha_prestamo)
+            @Html.EditorFor(Model => Model.numobras, new { default_value = "1" })
+            @Html.EditorFor(Model => Model.origen, new { default_value = "MGM" })
+            @Html.EditorFor(Model => Model.idLibro, new { default_value = "0" })
+
+
+        </div>
+
+    </div>
+    <div style="float:right">
+       @if (ViewBag.Modificar == 0)
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10"  align="left">
+                    <input type="submit" value="Crear Nuevo Libro" class="btn-default btn" />
+                </div>
+            </div>
+        }
+        @if (ViewBag.Modificar == 1)
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10"  align="left">
+                    <input type="submit" value="Modificar Libro" class="btn-default btn"/>
+                </div>
+            </div>
+        }
+     </div>
+    <div class="form-group">
+        @*<div class="col-md-offset-2 col-md-10"  style="text-align: left" >*@
+        <div style="text-align: left">
+            <a href="javascript:void(0);" onclick="history.go(-1);">Volver</a>
+        </div>
+    </div>
+}

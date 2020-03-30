@@ -47,6 +47,94 @@ namespace Bib2.Controllers
             return View();
         }
 
+        //public ActionResult Alta()
+        //{
+        //    var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblosauth/todos");
+        //    string json = GetWS(request);
+        //    JArray jsonArray = JArray.Parse(json);
+        //    List<Autores> autores = jsonArray.ToObject<List<Autores>>();
+            
+        //    ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
+        //                 new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
+        //    request = null;
+        //    request = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/temas");
+        //    json = GetWS(request);
+        //    jsonArray = null;
+        //    jsonArray = JArray.Parse(json);
+        //    List<string> temas = jsonArray.ToObject<List<string>>();
+        //    ViewBag.temas = temas.Select(t => new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = t.ToString(), Text = t.ToString() });
+        //    return View();
+        //}
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Alta([Bind(Include = "idLibro,titulo,autor,editorial,coleccion,fecha,tema,calificacion,paginas,comentario,prestamo,fecha_prestamo,numobras,origen,CodAutor")] mlib nuevoLibro)
+        {
+
+            if (string.IsNullOrEmpty(nuevoLibro.CodAutor.ToString()))
+            {
+                // 
+            }
+
+
+            string xdate = ((DateTime)nuevoLibro.fecha).ToString("u");     // "2020-03-22 23:59:59";
+                
+
+            string jsonLibro = "{\"idLibro\":\"" + nuevoLibro.idLibro + "\"," +
+                               "\"titulo\":\"" + nuevoLibro.titulo + "\"," +
+                               "\"autor\":\"" + nuevoLibro.autor + "\"," +
+                               "\"editorial\":\"" + nuevoLibro.editorial + "\"," +
+                               "\"coleccion\":\"" + nuevoLibro.coleccion + "\"," +
+                               //"\"fecha\":\"" + nuevoLibro.fecha + "\"," +
+                               "\"fecha\":\"" + xdate + "\"," +
+                               "\"tema\":\"" + nuevoLibro.tema + "\"," +
+                               "\"calificacion\":\"" + nuevoLibro.calificacion + "\"," +
+                               "\"paginas\":\"" + nuevoLibro.paginas + "\"," +
+                               "\"comentario\":\"" + nuevoLibro.comentario + "\"," +
+                               "\"prestamo\":\"" + nuevoLibro.prestamo + "\"," +
+                               "\"fecha_prestamo\":\"" + nuevoLibro.fecha_prestamo + "\"," +
+                               "\"origen\":\"" + nuevoLibro.origen + "\"," +
+                               "\"CodAutor\":\"" + nuevoLibro.CodAutor + "\"}";
+
+            string ret = PostWS("biblos/altalibro", "letra=" + jsonLibro);
+            //JArray jsonArray = JArray.Parse(ret);
+
+            return RedirectToAction("index", "Home");
+        }
+
+        public ActionResult Alta(int codigo = 0)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblosauth/todos");
+            string json = GetWS(request);
+            JArray jsonArray = JArray.Parse(json);
+            List<Autores> autores = jsonArray.ToObject<List<Autores>>();
+
+            ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
+                         new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
+            request = null;
+            request = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/temas");
+            json = GetWS(request);
+            jsonArray = null;
+            jsonArray = JArray.Parse(json);
+            List<string> temas = jsonArray.ToObject<List<string>>();
+            ViewBag.temas = temas.Select(t => new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = t.ToString(), Text = t.ToString() });
+            ViewBag.Modificar = 0;
+            if (codigo > 0)
+            {
+                request = null;
+                request = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/libro?id=" + codigo.ToString());
+                json = GetWS(request);
+                JObject js = JObject.Parse(json);
+                mlib libro = js.ToObject<mlib>();
+                ViewBag.Modificar = 1;
+                return View(libro);
+            }
+            else
+                return View();
+
+        }
+
         public ActionResult autores(char letra='A')
         {
             //var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblosauth/autorletra/" + letra);
@@ -54,7 +142,7 @@ namespace Bib2.Controllers
             //JArray jsonArray = JArray.Parse(json);
             //List<Autores> cantidades = jsonArray.ToObject<List<Autores>>();
             //return View();
-            string ret = GetPost("biblosauth/autorletralibros", "letra=" + letra);
+            string ret = PostWS("biblosauth/autorletralibros", "letra=" + letra);
             JArray jsonArray = JArray.Parse(ret);
             List<AutoresL> autors = jsonArray.ToObject<List<AutoresL>>();
             //ViewData["listaAutores"] = autors;
@@ -64,7 +152,7 @@ namespace Bib2.Controllers
 
         public ActionResult LibrosAutor(int codigo)
         {
-             string ret = GetPost("biblosauth/librosautor", "letra=" + codigo.ToString());
+             string ret = PostWS("biblosauth/librosautor", "letra=" + codigo.ToString());
             JArray jsonArray = JArray.Parse(ret);
             List<mlib> libros = jsonArray.ToObject<List<mlib>>();
             ViewData["CodAutor"] = codigo;
@@ -75,7 +163,7 @@ namespace Bib2.Controllers
 
         public ActionResult Libros(string letra="A")
         {
-            string ret = GetPost("biblos/LibrosLetra", "letra=" + letra.ToString());
+            string ret = PostWS("biblos/LibrosLetra", "letra=" + letra.ToString());
             JArray jsonArray = JArray.Parse(ret);
             List<mlib> libros = jsonArray.ToObject<List<mlib>>();
             return View(libros);
@@ -95,7 +183,7 @@ namespace Bib2.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-            string ret = GetPost("biblos/LibrosLetra", "letra="+"A");
+            string ret = PostWS("biblos/LibrosLetra", "letra="+"A");
             JArray jsonArray = JArray.Parse(ret);
             List<mlib> cantidades = jsonArray.ToObject<List<mlib>>();
             return View();
@@ -128,7 +216,7 @@ namespace Bib2.Controllers
             return content;
         }
 
-        public string GetPost(string ruta, string param)
+        public string PostWS(string ruta, string param)
         {
             string retorno = "";
           //  if (Token.Length <= 0)
