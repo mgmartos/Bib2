@@ -12,6 +12,7 @@
             $('#CodAutor').val($(this).val());
             $('#autor').val($(this).find("option:selected").text());
         });
+        });
         $('#temas').change(function (e) {
             $('#tema').val($(this).find("option:selected").text());
         });
@@ -64,7 +65,7 @@
         <fieldset>
             <legend>@Html.DisplayNameFor(model => model.autor)</legend>
             <div class="borde-inferior" style="padding-bottom:10px">
-                <div style="padding-bottom:10px">
+                <div style="padding-bottom:10px; display:none">
                     @Html.EditorFor(Model => Model.CodAutor, new { htmlAttributes = new { style = "width: 10%;" }, })
                     @Html.EditorFor(Model => Model.autor, new { htmlAttributes = new { style = "width: 90%;" }, })
                 </div>
@@ -109,7 +110,7 @@
             <fieldset style="float:left;padding-left:10px">
                 <legend>@Html.DisplayNameFor(Model => Model.calificacion)</legend>
                 <div class="borde-inferior">
-                    <input type="number" id="calificacion" name="calificacion" min="0" max="10">
+                    <input type="number" id="calificacion" name="calificacion" min="0" max="10"value="@Model.calificacion">
                 </div>
             </fieldset>
 
@@ -117,7 +118,7 @@
             <fieldset style="padding-left:30px">
                 <legend>@Html.DisplayNameFor(Model => Model.paginas)</legend>
                 <div class="borde-inferior">
-                    <input type="number" id="paginas" name="paginas" min="50" max="2000">
+                    <input type="number" id="paginas" name="paginas" min="50" max="2000" value="@Model.paginas">
                 </div>
                 <div class="borde-inferior">
                     @Html.EditorFor(Model => Model.origen, new { htmlAttributes = new { style = "display: none" }, })

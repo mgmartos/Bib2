@@ -72,19 +72,22 @@
     <div id="ListaLibros" align="center">
         <table id="tLibros" style="width:80%; border:thin" align="center">
             <tr>
-                <th style="width:10.00%" align="center">Código</th>
+                <th style="width:8.00%" align="center">Código</th>
                 <th style="width:60.00%" align="center">Título</th>
                 <th style="width:25.00%" align="center">Autor</th>
                 <th style="width:5.00%" align="center"></th>
+                <th style="width:2.00%" align="center"></th>
+
             </tr>
             @foreach (Bib2.Models.mlib libro in Model)
             {
-                <tr>
-                    <td align="center">@Html.DisplayFor(modelItem => libro.idLibro)</td>
-                    <td align="left"><a href="javascript:void(0);" class="anchorDetail" id="ver" data-id="@libro.idLibro">@Html.DisplayFor(modelItem => libro.titulo)</a></td>
-                    <td>@Html.DisplayFor(modelItem => libro.autor)</td>
-                    <td>@Html.ActionLink("Modificar","Alta",new { codigo = @libro.idLibro })</td>
-                </tr>
+        <tr>
+            <td align="center">@Html.DisplayFor(modelItem => libro.idLibro)</td>
+            <td align="left"><a href="javascript:void(0);" class="anchorDetail" id="ver" data-id="@libro.idLibro">@Html.DisplayFor(modelItem => libro.titulo)</a></td>
+            <td>@Html.DisplayFor(modelItem => libro.autor)</td>
+            <td>@Html.ActionLink("Modificar", "Alta", new { codigo = @libro.idLibro })</td>
+            <td align="center"><a href="javascript:void(0);" class="anchorDetail2" id="ur" data-id="@libro.idLibro"><i class='fas fa-plug' style='font-size:12px'></i></a>  </td>
+        </tr>
             }
         </table>
     </div>

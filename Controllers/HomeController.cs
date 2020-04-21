@@ -76,10 +76,18 @@ namespace Bib2.Controllers
             {
                 // 
             }
+            string xdate = "";
+            string xdatep = "";
+            if (nuevoLibro.fecha.HasValue)
+            {
+                xdate = ((DateTime)nuevoLibro.fecha).ToString("u");     // "2020-03-22 23:59:59"; 
+            }
+            if (nuevoLibro.fecha_prestamo.HasValue)
+            {
+                xdatep = ((DateTime)nuevoLibro.fecha_prestamo).ToString("u");     // "2020-03-22 23:59:59"; 
+            }
 
 
-            string xdate = ((DateTime)nuevoLibro.fecha).ToString("u");     // "2020-03-22 23:59:59";
-                
 
             string jsonLibro = "{\"idLibro\":\"" + nuevoLibro.idLibro + "\"," +
                                "\"titulo\":\"" + nuevoLibro.titulo + "\"," +
@@ -93,14 +101,16 @@ namespace Bib2.Controllers
                                "\"paginas\":\"" + nuevoLibro.paginas + "\"," +
                                "\"comentario\":\"" + nuevoLibro.comentario + "\"," +
                                "\"prestamo\":\"" + nuevoLibro.prestamo + "\"," +
-                               "\"fecha_prestamo\":\"" + nuevoLibro.fecha_prestamo + "\"," +
+                               "\"fecha_prestamo\":\"" + xdatep + "\"," +
                                "\"origen\":\"" + nuevoLibro.origen + "\"," +
                                "\"CodAutor\":\"" + nuevoLibro.CodAutor + "\"}";
 
             string ret = PostWS("biblos/altalibro", "letra=" + jsonLibro);
             //JArray jsonArray = JArray.Parse(ret);
+            string letra = nuevoLibro.titulo.Substring(0, 1);
 
-            return RedirectToAction("index", "Home");
+            //return RedirectToAction("Libros", "Home", "letra=" + letra);
+            return Redirect("Libros?letra=" + letra);
         }
 
         public ActionResult Alta(int codigo = 0)
@@ -110,15 +120,15 @@ namespace Bib2.Controllers
             JArray jsonArray = JArray.Parse(json);
             List<Autores> autores = jsonArray.ToObject<List<Autores>>();
 
-            ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
-                         new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
+            //ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
+            //             new System.Web.Mvc.SelectListItem { Selected = (a.idAutor == idAutor), Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
             request = null;
             request = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/temas");
             json = GetWS(request);
             jsonArray = null;
             jsonArray = JArray.Parse(json);
-            List<string> temas = jsonArray.ToObject<List<string>>();
-            ViewBag.temas = temas.Select(t => new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = t.ToString(), Text = t.ToString() });
+            //List<string> temas = jsonArray.ToObject<List<string>>();
+            //ViewBag.temas = temas.Select(t => new System.Web.Mvc.SelectListItem { Selected = (t.ToString() == idAutor),*/ Value = t.ToString(), Text = t.ToString() });
             ViewBag.Modificar = 0;
             if (codigo > 0)
             {
@@ -127,11 +137,17 @@ namespace Bib2.Controllers
                 json = GetWS(request);
                 JObject js = JObject.Parse(json);
                 mlib libro = js.ToObject<mlib>();
+                List<string> temas = jsonArray.ToObject<List<string>>();
+                ViewBag.temas = temas.Select(t => new System.Web.Mvc.SelectListItem { Selected = (t.ToString().Trim() == libro.tema.Trim()),  Value = t.ToString(), Text = t.ToString() });
+                ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
+                new System.Web.Mvc.SelectListItem { Selected = (a.idAutor == libro.CodAutor), Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
+
                 ViewBag.Modificar = 1;
                 return View(libro);
             }
             else
                 return View();
+
 
         }
 
