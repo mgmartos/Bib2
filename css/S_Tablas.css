@@ -16,8 +16,8 @@ table {
 table, td {
     border: 1px solid black;
     border-collapse: collapse;
-    font: normal,10px,arial,400;
-    font-size: small; 
+    font: normal,10px,arial;
+    font-size:smaller; 
     padding-left: 10px }
 
     .horizontal {

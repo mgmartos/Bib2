@@ -1,0 +1,36 @@
+﻿@model List<Bib2.Models.Urls>
+
+    <div class="form-horizontal" style="padding:10px; background-color: whitesmoke">
+        <div class="form-group" style="padding:15px">
+            <h4>Enlaces</h4>
+            <hr />
+
+            @if (Model.Count > 0)
+            {
+                <div class="form-group">
+
+                    <div class="col-md-10 align=" center"">
+                        <table id="Turl" style="width:95%; border:thin" align="center">
+                            <tr>
+                                <th style="text-align:center">Páginas</th>
+                            </tr>
+                            @foreach (Bib2.Models.Urls row in Model)
+                            {
+                                <tr>
+                                    <td style="text-decoration:none">
+                                        <a href="@row.direccion.ToString()" target="_blank">@row.descripcion.ToString()</a>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            }
+            else
+            {
+        <div  align="center">
+            <h4 style="color:darkred">No hay URL asociada</h4>
+        </div>
+            }
+        </div>
+    </div>

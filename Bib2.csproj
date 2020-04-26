@@ -193,6 +193,9 @@
     <Content Include="Views\Home\_Libro.cshtml" />
     <Content Include="Views\Home\Libros.cshtml" />
     <Content Include="Views\Home\Alta.cshtml" />
+    <Content Include="Views\Home\_Links.cshtml" />
+    <Content Include="Views\Home\_LibrosAutor.cshtml" />
+    <Content Include="Views\Home\AltaLink.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

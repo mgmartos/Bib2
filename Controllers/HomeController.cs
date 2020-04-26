@@ -35,8 +35,7 @@ namespace Bib2.Controllers
 
             ViewData["CantidadLibros"] = cantidades[0];
             ViewData["CantidadAutores"] = cantidades[1];
-            ViewData["CantidadEditoriales"] = cantidades[2];
-
+            ViewData["CantidadEditoriales"] = cantidades[2];               
             return View();
         }
 
@@ -177,6 +176,18 @@ namespace Bib2.Controllers
 
         }
 
+        public PartialViewResult _LibrosAutor(int codigo)
+        {
+            string ret = PostWS("biblosauth/librosautor", "letra=" + codigo.ToString());
+            JArray jsonArray = JArray.Parse(ret);
+            List<mlib> libros = jsonArray.ToObject<List<mlib>>();
+            ViewData["CodAutor"] = codigo;
+            ViewData["NomAutor"] = libros[0].autor;
+            return PartialView(libros);
+            //return (this.LibrosAutor(codigo));
+        }
+
+
         public ActionResult Libros(string letra="A")
         {
             string ret = PostWS("biblos/LibrosLetra", "letra=" + letra.ToString());
@@ -185,18 +196,74 @@ namespace Bib2.Controllers
             return View(libros);
         }
 
-        public PartialViewResult _Libro(int  codigo)
+
+        private Bib2.Models.mlib Obtener_Libro(int codigo)
         {
             var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/libro?id=" + codigo.ToString());
             string json = GetWS(request);
             //JArray jsonArray = JArray.Parse(json);
             JObject js = JObject.Parse(json);
             mlib libro = js.ToObject<mlib>();
+            return libro;
+        }
+        private Bib2.Models.Autores Obtener_Autor(int codigo)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblosauth/autor?id=" + codigo.ToString());
+            string json = GetWS(request);
+            //JArray jsonArray = JArray.Parse(json);
+            JObject js = JObject.Parse(json);
+            Autores autor = js.ToObject<Autores>();
+            return autor;
+        }
+
+        public PartialViewResult _Libro(int  codigo)
+        {
+            mlib libro = Obtener_Libro(codigo);
+
             return PartialView(libro);
         }
-        
 
-        public ActionResult Contact()
+        public PartialViewResult _Links(int codigo)
+        {
+            var request2 = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/enlaces?tipo=1&padre=" + codigo.ToString());
+            string json2 = GetWS(request2);
+
+            JArray jsonArray = JArray.Parse(json2);
+            List<Urls> links = jsonArray.ToObject<List<Urls>>();
+
+            return PartialView(links);
+        }
+
+        public PartialViewResult AltaLink(int tipo, int codigo_padre)
+        {
+            ViewData["tipo"] = tipo.ToString();
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AltaLink([Bind(Include = "tipo,codigo_padre,direccion,descripcion")] Urls nuevoLink)
+        {
+            string jsonLink = "{\"tipo\":\"" + nuevoLink.tipo + "\"," +
+                              "\"codigo_padre\":\"" + nuevoLink.codigo_padre + "\"," +
+                              "\"direccion\":\"" + nuevoLink.direccion + "\"," +
+                              "\"descripcion\":\"" + nuevoLink.descripcion + "\"}";
+
+            string ret = PostWS("biblos/altalink", "letra=" + jsonLink);
+            if (nuevoLink.tipo == 1) // libro
+            {
+                mlib libro = Obtener_Libro(nuevoLink.codigo_padre);
+                return RedirectToAction("Libros", "Home", new { letra = libro.titulo.ToString().Substring(0, 1).ToUpper() });
+            }
+            else
+            {
+                Autores autor = Obtener_Autor(nuevoLink.codigo_padre);
+                return RedirectToAction("Autores", "Home", new { letra = autor.NombreAutor.ToString().Substring(0, 1).ToUpper() });
+            }
+        }
+
+
+            public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
             string ret = PostWS("biblos/LibrosLetra", "letra="+"A");

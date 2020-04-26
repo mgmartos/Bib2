@@ -11,9 +11,9 @@ h2 {
 p {
     color: #8e44ad;
 }
-
-
-
+/*.anchorDetail {
+    text-decoration: none;
+}*/
 legend {
     color: darkred;
     background-color: transparent;
