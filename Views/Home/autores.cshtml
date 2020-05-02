@@ -2,45 +2,136 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<script>
+
+ var LinkURL = '/Home/_Links';
+    $(function () {
+        $(".linkDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: LinkURL,
+                contentType: "application/json; charset=utf-8",
+                data: {  "tipo": 2,"codigo": id},
+                datatype: "json",
+                success: function (data) {
+                    //   debugger;
+                    $('#myModalC').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Fallo en la carga del contenido dinámico.");
+                }
+            });
+        });
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+    var LinkURLA = '/Home/AltaLink';
+    $(function () {
+        $(".linkADetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: LinkURLA,
+                contentType: "application/json; charset=utf-8",
+                data: { "tipo": 2,"codigo_padre": id},
+                datatype: "json",
+                success: function (data) {
+                    //   debugger;
+                    $('#myModalC').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Fallo en la carga del contenido dinámico.");
+                }
+            });
+        });
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+    
+</script>
 
 <h2>Autores</h2>
 <div id="Principal" style="">
+    <div class="modal fade col-12" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalC'>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Principal" style="">
 
-    <div id="Iniciales" align="center" style="padding-left: 9%;">
-        <fieldset>
+        <div id="Iniciales" align="center" style="padding-left: 9%;">
+            <fieldset>
 
-            <ul id="Inicial" align="center">
-                @{
-                    for (char c = 'A'; c <= 'Z'; c++)
-                    {
-                        <li class="horizontal">
-                            <a>
-                                @Html.ActionLink(c.ToString(), "Autores", new { letra = c })
-                            </a>
-                        </li>
+                <ul id="Inicial" align="center">
+                    @{
+                        for (char c = 'A'; c <= 'Z'; c++)
+                        {
+                            <li class="horizontal">
+                                <a>
+                                    @Html.ActionLink(c.ToString(), "Autores", new { letra = c })
+                                </a>
+                            </li>
+                        }
                     }
-                }
-            </ul>
-        </fieldset>
-    </div>
-    <div id="ListaAutores" align="center">
-        <table id="tAutores" style="width:50%; border:thin" align="center">
-            <tr>
-                <th style="width:10.00%">Cod.</th>
-                <th style="width:75.00%">Autor</th>
-                <th style="width:15.00%">Nº Libros</th>
-            </tr>
-            @foreach (Bib2.Models.AutoresL autor in Model)
-            {
+                </ul>
+            </fieldset>
+        </div>
+        <div id="ListaAutores" align="center">
+            <table id="tAutores" style="width:50%; border:thin" align="center">
                 <tr>
-                    <td>@autor.idAutor</td>
-                    <td style="text-decoration:none">@Html.ActionLink(@autor.NombreAutor, "LibrosAutor", new { codigo = @autor.idAutor })</td>
-                    <td align="center">@autor.Cantidad</td>
+                    <th style="width:10.00%">Cod.</th>
+                    <th style="width:75.00%">Autor</th>
+                    <th style="width:11.00%">Nº Libros</th>
+                    <th style="width:3.00%"></th>
+                    <th style="width:2.00%"></th>
                 </tr>
-            }
-        </table>
+                @foreach (Bib2.Models.AutoresL autor in Model)
+                {
+                    <tr>
+                        <td>@autor.idAutor</td>
+
+                        <td style="text-decoration:none">
+                            @if (autor.Cantidad > 0)
+                            {
+                                @Html.ActionLink(@autor.NombreAutor, "LibrosAutor", new { codigo = @autor.idAutor })
+                            }
+                            @if (autor.Cantidad == 0)
+                            {
+                                @autor.NombreAutor
+                            }
+
+                            </td>
+                        <td align="center">@autor.Cantidad</td>
+                        <td align="center"><a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@autor.idAutor"><i class='fas fa-plug' style='font-size:12px'></i></a>  </td>
+                        <td align="center"><a href="javascript:void(0);" class="linkADetail" id="ur" data-id="@autor.idAutor"><i class='fas fa-marker' style='font-size:12px'></i></a>  </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
+    <p>
+        @Html.ActionLink("Volver", "index")
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Volver", "index")
-</p>

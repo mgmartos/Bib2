@@ -45,7 +45,7 @@
                 type: "GET",
                 url: LinkURL,
                 contentType: "application/json; charset=utf-8",
-                data: { "codigo": id},
+                data: {  "tipo": 1, "codigo": id},
                 datatype: "json",
                 success: function (data) {
                     //   debugger;
@@ -180,9 +180,10 @@
             <td align="left" style="text-transform:capitalize"><a href="javascript:void(0);" class="anchorDetailAuthor" id="ver" data-id="@libro.CodAutor">@Html.DisplayFor(modelItem => libro.autor)</a></td>
             <td>@Html.DisplayFor(modelItem => libro.paginas)</td>
             <td>@Html.DisplayFor(modelItem => libro.tema)</td>
-            <td>@Html.ActionLink("Modificar", "Alta", new { codigo = @libro.idLibro })</td>
+            <td>@Html.ActionLink("Editar", "Alta", new { codigo = @libro.idLibro })</td>
             <td align="center"><a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@libro.idLibro"><i class='fas fa-plug' style='font-size:12px'></i></a>  </td>
             <td align="center"><a href="javascript:void(0);" class="linkADetail" id="ur" data-id="@libro.idLibro"><i class='fas fa-marker' style='font-size:12px'></i></a>  </td>
+
         </tr>
             }
         </table>

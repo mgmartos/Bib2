@@ -52,7 +52,7 @@ namespace Bib2.Controllers
         //    string json = GetWS(request);
         //    JArray jsonArray = JArray.Parse(json);
         //    List<Autores> autores = jsonArray.ToObject<List<Autores>>();
-            
+
         //    ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
         //                 new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
         //    request = null;
@@ -126,8 +126,7 @@ namespace Bib2.Controllers
             json = GetWS(request);
             jsonArray = null;
             jsonArray = JArray.Parse(json);
-            //List<string> temas = jsonArray.ToObject<List<string>>();
-            //ViewBag.temas = temas.Select(t => new System.Web.Mvc.SelectListItem { Selected = (t.ToString() == idAutor),*/ Value = t.ToString(), Text = t.ToString() });
+            List<string> temas = jsonArray.ToObject<List<string>>();
             ViewBag.Modificar = 0;
             if (codigo > 0)
             {
@@ -136,8 +135,8 @@ namespace Bib2.Controllers
                 json = GetWS(request);
                 JObject js = JObject.Parse(json);
                 mlib libro = js.ToObject<mlib>();
-                List<string> temas = jsonArray.ToObject<List<string>>();
-                ViewBag.temas = temas.Select(t => new System.Web.Mvc.SelectListItem { Selected = (t.ToString().Trim() == libro.tema.Trim()),  Value = t.ToString(), Text = t.ToString() });
+                // List<string> temas = jsonArray.ToObject<List<string>>();
+                ViewBag.temas = temas.Select(t => new System.Web.Mvc.SelectListItem { Selected = (t.ToString().Trim() == libro.tema.Trim()), Value = t.ToString(), Text = t.ToString() });
                 ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
                 new System.Web.Mvc.SelectListItem { Selected = (a.idAutor == libro.CodAutor), Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
 
@@ -145,10 +144,65 @@ namespace Bib2.Controllers
                 return View(libro);
             }
             else
-                return View();
+            {
+                ViewBag.temas = temas.Select(t => new System.Web.Mvc.SelectListItem { /*Selected = (t.ToString() == idAutor),*/ Value = t.ToString(), Text = t.ToString() });
+                ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
+                        new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == libro.CodAutor),*/ Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
 
+                return View(new mlib());
+            }
 
         }
+
+
+        [HttpPost]
+        public ActionResult AltaAutor([Bind(Include = "idAutor,NombreAutor")] Autores nuevoAutor)
+        {
+            string jsonAutor = "{\"idAutor\":\"" + nuevoAutor.idAutor + "\"," +
+                               "\"NombreAutor\":\"" + nuevoAutor.NombreAutor + "\"}";
+
+            string ret = PostWS("biblosauth/altaAutor", "letra=" + jsonAutor);
+            //JArray jsonArray = JArray.Parse(ret);
+            string letra = nuevoAutor.NombreAutor.Substring(0, 1);
+
+            //return RedirectToAction("Libros", "Home", "letra=" + letra);
+            return Redirect("Index");
+        }
+
+        public ActionResult AltaAutor(int codigo=0)
+        {
+            ViewBag.Modificar = 0;
+            return View(new Autores());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AltaLectura([Bind(Include = "titulo,autor,CodAutor,fecha,calificacion,comentario,Ebook")] Lecturas nuevaLectura)
+        {
+            string xdate = "";
+            if (nuevaLectura.fecha.HasValue)
+            {
+                xdate = ((DateTime)nuevaLectura.fecha).ToString("u");     // "2020-03-22 23:59:59"; 
+            }
+            string jsonLibro = "{\"titulo\":\"" + nuevaLectura.titulo + "\"," +
+                               "\"autor\":\"" + nuevaLectura.autor + "\"," +
+                               "\"CodAutor\":\"" + nuevaLectura.CodAutor + "\"," +
+                              "\"fecha\":\"" + xdate + "\"," +
+                               "\"calificacion\":\"" + nuevaLectura.calificacion + "\"," +
+                               "\"comentario\":\"" + nuevaLectura.comentario + "\"," +
+            //"\"EBook\":\" \"}";
+                                "\"EBook\":\"" + nuevaLectura.Ebook + "\"}";
+
+            string ret = PostWS("biblos/altalectura", "letra=" + jsonLibro);
+            string letra = nuevaLectura.titulo.Substring(0, 1);
+            return Redirect("AltaLectura");
+        }
+        public ActionResult AltaLectura()
+        {
+            ViewBag.Modificar = 0;
+            return View(new Bib2.Models.Lecturas());
+        }
+
 
         public ActionResult autores(char letra='A')
         {
@@ -172,8 +226,7 @@ namespace Bib2.Controllers
             List<mlib> libros = jsonArray.ToObject<List<mlib>>();
             ViewData["CodAutor"] = codigo;
             ViewData["NomAutor"] = libros[0].autor;
-            return View(libros);
-
+             return View(libros);
         }
 
         public PartialViewResult _LibrosAutor(int codigo)
@@ -223,9 +276,9 @@ namespace Bib2.Controllers
             return PartialView(libro);
         }
 
-        public PartialViewResult _Links(int codigo)
+        public PartialViewResult _Links(int tipo, int codigo)
         {
-            var request2 = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/enlaces?tipo=1&padre=" + codigo.ToString());
+            var request2 = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/enlaces?tipo=" + tipo.ToString()+"&padre=" + codigo.ToString());
             string json2 = GetWS(request2);
 
             JArray jsonArray = JArray.Parse(json2);
@@ -302,7 +355,7 @@ namespace Bib2.Controllers
         public string PostWS(string ruta, string param)
         {
             string retorno = "";
-          //  if (Token.Length <= 0)
+            if (Token.Length <= 0)
                 ObtenerToken();
             HttpWebRequest request = WebRequest.Create(WSRest + ruta) as HttpWebRequest;
             request.Method = "POST";

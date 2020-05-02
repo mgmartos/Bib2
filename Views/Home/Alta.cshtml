@@ -12,25 +12,56 @@
             $('#CodAutor').val($(this).val());
             $('#autor').val($(this).find("option:selected").text());
         });
-        });
-        $('#temas').change(function (e) {
-            $('#tema').val($(this).find("option:selected").text());
-        });
+    //});
+    $('#temas').change(function (e) {
+        $('#tema').val($(this).find("option:selected").text());
+    });
 
-        $('#origen').focus(function (e) {
+    $('#origen').focus(function (e) {
 
-            if ($(this).val().length == 0)
-                $(this).val('MGM');
-        });
-        $('#calificacion').change(function (e) {
-            if ($(this).val() == '-1')
-                $(this).val('');
-        });
-        $('#SelectOrigen').change(function (e) {
+        if ($(this).val().length == 0)
+            $(this).val('MGM');
+    });
+    $('#calificacion').change(function (e) {
+        if ($(this).val() == '-1')
+            $(this).val('');
+    });
+    $('#SelectOrigen').change(function (e) {
 
-            $('#origen').val($(this).val());
-        });
+        $('#origen').val($(this).val());
+    });
     });                       // fin de Ready
+
+    //var LinkURL = '/Home/AltaAutor';
+    //$(function () {
+    //    $(".linkDetail").click(function () {
+    //        var $buttonClicked = $(this);
+    //        var id = $buttonClicked.attr('data-id');
+    //        var options = { "backdrop": "static", keyboard: true };
+    //        $.ajax({
+    //            type: "GET",
+    //            url: LinkURL,
+    //            contentType: "application/json; charset=utf-8",
+    //            data: {"codigo": id},
+    //            datatype: "json",
+    //            success: function (data) {
+    //                //   debugger;
+    //                $('#myModalC').html(data);
+    //                $('#myModal').modal(options);
+    //                $('#myModal').modal('show');
+
+    //            },
+    //            error: function () {
+    //                alert("Fallo en la carga del contenido dinámico.");
+    //            }
+    //        });
+    //    });
+    //    $("#closbtn").click(function () {
+    //        $('#myModal').modal('hide');
+    //    });
+    //});
+
+
 </script>
 
 
@@ -49,6 +80,17 @@
     @*idLibro,titulo,autor,editorial,coleccion,fecha,tema,calificacion,paginas,comentario,prestamo,fecha_prestamo,numobras,origen,CodAutor*@
     @Html.AntiForgeryToken()
     <div style="font-size:small; width:50%" align="left">
+        <div class="modal fade col-12" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalC'>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <fieldset>
             <legend>@Html.DisplayNameFor(model => model.titulo)</legend>
             <div class="borde-inferior" style="padding-bottom:10px">
@@ -71,6 +113,10 @@
                 </div>
                 <div id="DropDown">
                     @Html.DropDownList("autores")
+                    @*<a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@Model.CodAutor"><i class='fas fa-plus' style='font-size:20px; padding-left:20px'></i></a>
+        <a href="@row.direccion.ToString()" target="_blank">@row.descripcion.ToString()</a>*@
+
+                    @Html.ActionLink("Crear","AltaAutor","Home",new { htmlAttributes = new { target="_blank" }, })
                 </div>
 
             </div>
@@ -110,7 +156,7 @@
             <fieldset style="float:left;padding-left:10px">
                 <legend>@Html.DisplayNameFor(Model => Model.calificacion)</legend>
                 <div class="borde-inferior">
-                    <input type="number" id="calificacion" name="calificacion" min="0" max="10"value="@Model.calificacion">
+                    <input type="number" id="calificacion" name="calificacion" min="0" max="10" value="@Model.calificacion">
                 </div>
             </fieldset>
 
@@ -153,10 +199,10 @@
 
     </div>
     <div style="float:right">
-       @if (ViewBag.Modificar == 0)
+        @if (ViewBag.Modificar == 0)
         {
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10"  align="left">
+                <div class="col-md-offset-2 col-md-10" align="left">
                     <input type="submit" value="Crear Nuevo Libro" class="btn-default btn" />
                 </div>
             </div>
@@ -164,12 +210,12 @@
         @if (ViewBag.Modificar == 1)
         {
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10"  align="left">
-                    <input type="submit" value="Modificar Libro" class="btn-default btn"/>
+                <div class="col-md-offset-2 col-md-10" align="left">
+                    <input type="submit" value="Modificar Libro" class="btn-default btn" />
                 </div>
             </div>
         }
-     </div>
+    </div>
     <div class="form-group">
         @*<div class="col-md-offset-2 col-md-10"  style="text-align: left" >*@
         <div style="text-align: left">
