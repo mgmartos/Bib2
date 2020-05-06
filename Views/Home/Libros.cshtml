@@ -127,7 +127,7 @@
 
 
 
-<h2>Libros</h2>
+<h2>Libros @Model.Count().ToString()</h2>
 <div id="Principal" style="">
     <div class="modal fade col-12" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -147,6 +147,11 @@
         <fieldset>
             <ul id="Inicial" align="center">
                 @{
+                    <li class="horizontal">
+                        <a>
+                            @Html.ActionLink("#", "Libros", new { letra = "#" })
+                        </a>
+                    </li>
                     for (char c = 'A'; c <= 'Z'; c++)
                     {
                         <li class="horizontal">

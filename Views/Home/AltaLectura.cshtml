@@ -4,13 +4,21 @@
     ViewBag.Title = "AltaLectura";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+        $('#numobras').val('1');
+        $('#autores').change(function (e) {
+            $('#CodAutor').val($(this).val());
+            $('#autor').val($(this).find("option:selected").text());
+        });
+    });
+    </script>
 <h2>Alta Lecturas</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal" style="width:100%">
     @*<h4>Lecturas</h4>*@
     <hr />
@@ -31,6 +39,12 @@
             <div class="col-md-10 borde-inferior" style="padding-bottom:10px">
                 @Html.EditorFor(model => model.autor, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.autor, "", new { @class = "text-danger" })
+            </div>
+            <div id="DropDown" style="padding-left:15px">
+                @Html.DropDownList("autores")
+            </div>
+            <div style="padding-bottom:10px; display:none">
+                @Html.EditorFor(Model => Model.CodAutor, new { htmlAttributes = new { style = "width: 10%;" }, })
             </div>
         </div>
     </fieldset>
@@ -66,7 +80,7 @@
             </div>
         </fieldset>
 
-    
+
         <fieldset style="padding-left:10px">
             <legend>@Html.DisplayNameFor(Model => Model.Ebook)</legend>
             <div class="form-group">

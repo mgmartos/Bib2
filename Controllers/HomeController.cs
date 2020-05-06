@@ -35,7 +35,7 @@ namespace Bib2.Controllers
 
             ViewData["CantidadLibros"] = cantidades[0];
             ViewData["CantidadAutores"] = cantidades[1];
-            ViewData["CantidadEditoriales"] = cantidades[2];               
+            ViewData["CantidadEditoriales"] = cantidades[2];
             return View();
         }
 
@@ -169,7 +169,7 @@ namespace Bib2.Controllers
             return Redirect("Index");
         }
 
-        public ActionResult AltaAutor(int codigo=0)
+        public ActionResult AltaAutor(int codigo = 0)
         {
             ViewBag.Modificar = 0;
             return View(new Autores());
@@ -193,14 +193,32 @@ namespace Bib2.Controllers
             //"\"EBook\":\" \"}";
                                 "\"EBook\":\"" + nuevaLectura.Ebook + "\"}";
 
-            string ret = PostWS("biblos/altalectura", "letra=" + jsonLibro);
+            string ret = PostWS("Lecturas/altalectura", "letra=" + jsonLibro);
             string letra = nuevaLectura.titulo.Substring(0, 1);
             return Redirect("AltaLectura");
         }
         public ActionResult AltaLectura()
         {
             ViewBag.Modificar = 0;
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblosauth/todos");
+            string json = GetWS(request);
+            JArray jsonArray = JArray.Parse(json);
+            List<Autores> autores = jsonArray.ToObject<List<Autores>>();
+            ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
+                 new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == libro.CodAutor),*/ Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
+
+
             return View(new Bib2.Models.Lecturas());
+        }
+
+        [HttpGet]
+        public ActionResult ListaLecturas()
+        {
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "lecturas/todos");
+            string json = GetWS(request);
+            JArray jsonArray = JArray.Parse(json);
+            List<Lecturas> lecturas = jsonArray.ToObject<List<Lecturas>>();
+            return View(lecturas);
         }
 
 

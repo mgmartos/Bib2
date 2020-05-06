@@ -20,7 +20,7 @@ namespace Bib2.Models
         public Nullable<int> calificacion { get; set; }
         [Display(Name = "Comentarios")] 
         public string comentario { get; set; }
-		[Display(Name = "En EBook")]
+		[Display(Name = "EBook")]
         public bool Ebook { get; set; }
     }
 }

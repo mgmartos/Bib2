@@ -7,10 +7,10 @@ table {
 
     table, th {
         color: black;
-        background-color: lightgray;
+        background-color: lightgrey;
         border: 1px solid black;
         border-collapse: collapse;
-        align-content: center;
+        text-align : center;
     }
 
 table, td {

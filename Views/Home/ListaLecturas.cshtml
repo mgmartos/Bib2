@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "ListaLecturas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Bib2.Models.Lecturas>
+<h2>Lista de Lecturas @Model.Count().ToString()</h2>
+<div id="Principal" style="">
+    <div id="ListaLecturas" align="center">
+        <table id="tLecturas" style="width:90%; border:thin" align="center">
+            <tr>
+                <th style="width:30.00%">@Html.DisplayNameFor(model => model[0].titulo)</th>
+                <th style="width:20.00%">@Html.DisplayNameFor(model => model[0].autor)</th>
+                <th style="width:10.00%">@Html.DisplayNameFor(model => model[0].fecha)</th>
+                <th style="width:35.00%">@Html.DisplayNameFor(model => model[0].comentario)</th>
+                <th style="width:05.00%">@Html.DisplayNameFor(model => model[0].Ebook)</th>
+
+            </tr>
+            @foreach (Bib2.Models.Lecturas lectura in Model)
+            {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => lectura.titulo)</td>
+            <td>@Html.DisplayFor(modelItem => lectura.autor)</td>
+            <td>
+                @*@Html.DisplayFor(modelItem => lectura.fecha)*@
+                        @Convert.ToDateTime(lectura.fecha).ToString("dd/MM/yyyy")
+                    </td>
+            <td>@Html.DisplayFor(modelItem => lectura.comentario)</td>
+            <td>@Html.DisplayFor(modelItem => lectura.Ebook)</td>
+        </tr>
+            }
+        </table>
+    </div>
+    <p>
+        @Html.ActionLink("Volver", "index")
+    </p>
+</div>
