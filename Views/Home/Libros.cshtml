@@ -1,5 +1,6 @@
-﻿@model List<Bib2.Models.mlib>
+﻿@model List<Bib2.Models.mlibU>
 @{
+
     ViewBag.Title = "Libros";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -15,7 +16,7 @@
                 type: "GET",
                 url: DetailURL,
                 contentType: "application/json; charset=utf-8",
-                data: { "codigo": id},
+                data: { "codigo": id },
                 datatype: "json",
                 success: function (data) {
                     //   debugger;
@@ -35,7 +36,7 @@
     });
 
 
- var LinkURL = '/Home/_Links';
+    var LinkURL = '/Home/_Links';
     $(function () {
         $(".linkDetail").click(function () {
             var $buttonClicked = $(this);
@@ -45,7 +46,7 @@
                 type: "GET",
                 url: LinkURL,
                 contentType: "application/json; charset=utf-8",
-                data: {  "tipo": 1, "codigo": id},
+                data: { "tipo": 1, "codigo": id },
                 datatype: "json",
                 success: function (data) {
                     //   debugger;
@@ -74,7 +75,7 @@
                 type: "GET",
                 url: LinkURLA,
                 contentType: "application/json; charset=utf-8",
-                data: { "tipo": 1,"codigo_padre": id},
+                data: { "tipo": 1, "codigo_padre": id },
                 datatype: "json",
                 success: function (data) {
                     //   debugger;
@@ -93,8 +94,8 @@
         });
     });
 
-    
-     var AuthURL = '/Home/_LibrosAutor';
+
+    var AuthURL = '/Home/_LibrosAutor';
     $(function () {
         $(".anchorDetailAuthor").click(function () {
             var $buttonClicked = $(this);
@@ -104,7 +105,7 @@
                 type: "GET",
                 url: AuthURL,
                 contentType: "application/json; charset=utf-8",
-                data: { "codigo": id},
+                data: { "codigo": id },
                 datatype: "json",
                 success: function (data) {
                     //   debugger;
@@ -167,29 +168,35 @@
     <div id="ListaLibros" align="center">
         <table id="tLibros" style="width:80%; border:thin" align="center">
             <tr>
-                <th style="width:5.00%" align="center">@Html.DisplayNameFor(model => model[0].idLibro)</th>
-                <th style="width:45.00%" align="center">@Html.DisplayNameFor(model => model[0].titulo)</th>
-                <th style="width:30.00%" align="center">@Html.DisplayNameFor(model => model[0].autor)</th>
-                <th style="width:5.00%" align="center">@Html.DisplayNameFor(model => model[0].paginas)</th>
-                <th style="width:13.00%" align="center">@Html.DisplayNameFor(model => model[0].tema)</th>
+                <th style="width:5.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.idLibro)</th>
+                <th style="width:45.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.titulo)</th>
+                <th style="width:30.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.autor)</th>
+                <th style="width:5.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.paginas)</th>
+                <th style="width:13.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.tema)</th>
                 <th style="width:5.00%" align="center"></th>
                 <th style="width:2.00%" align="center"></th>
                 <th style="width:2.00%" align="center"></th>
 
             </tr>
-            @foreach (Bib2.Models.mlib libro in Model)
+            @foreach (Bib2.Models.mlibU l in Model)
             {
-        <tr>
-            <td align="center">@Html.DisplayFor(modelItem => libro.idLibro)</td>
-            <td align="left"><a href="javascript:void(0);" class="anchorDetail" id="ver" data-id="@libro.idLibro">@Html.DisplayFor(modelItem => libro.titulo)</a></td>
-            <td align="left" style="text-transform:capitalize"><a href="javascript:void(0);" class="anchorDetailAuthor" id="ver" data-id="@libro.CodAutor">@Html.DisplayFor(modelItem => libro.autor)</a></td>
-            <td>@Html.DisplayFor(modelItem => libro.paginas)</td>
-            <td>@Html.DisplayFor(modelItem => libro.tema)</td>
-            <td>@Html.ActionLink("Editar", "Alta", new { codigo = @libro.idLibro })</td>
-            <td align="center"><a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@libro.idLibro"><i class='fas fa-plug' style='font-size:12px'></i></a>  </td>
-            <td align="center"><a href="javascript:void(0);" class="linkADetail" id="ur" data-id="@libro.idLibro"><i class='fas fa-marker' style='font-size:12px'></i></a>  </td>
+                <tr>
+                    <td align="center">@Html.DisplayFor(modelItem => l.libro.idLibro)</td>
+                    <td align="left"><a href="javascript:void(0);" class="anchorDetail" id="ver" data-id="@l.libro.idLibro">@Html.DisplayFor(modelItem => l.libro.titulo)</a></td>
+                    <td align="left" style="text-transform:capitalize"><a href="javascript:void(0);" class="anchorDetailAuthor" id="ver" data-id="@l.libro.CodAutor">@Html.DisplayFor(modelItem => l.libro.autor)</a></td>
+                    <td>@Html.DisplayFor(modelItem => l.libro.paginas)</td>
+                    <td>@Html.DisplayFor(modelItem => l.libro.tema)</td>
+                    <td>@Html.ActionLink("Editar", "Alta", new { codigo = l.libro.idLibro })</td>
+                    <td align="center">
+                        @if (l.numurls > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@l.libro.idLibro"><i class='fas fa-plug' style='font-size:12px'></i></a>
+                        }
+                    </td> 
 
-        </tr>
+                    <td align="center"><a href="javascript:void(0);" class="linkADetail" id="ur" data-id="@l.libro.idLibro"><i class='fas fa-marker' style='font-size:12px'></i></a>  </td>
+
+                </tr>
             }
         </table>
     </div>

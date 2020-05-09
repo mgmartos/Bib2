@@ -263,7 +263,18 @@ namespace Bib2.Controllers
         {
             string ret = PostWS("biblos/LibrosLetra", "letra=" + letra.ToString());
             JArray jsonArray = JArray.Parse(ret);
-            List<mlib> libros = jsonArray.ToObject<List<mlib>>();
+            //List<mlibU> libros = jsonArray.ToObject<List<mlibU>>();
+            List<mlibU> libros = new List<mlibU>();
+            for (int i=0;i<jsonArray.Count;i++)
+            {
+                mlib l = jsonArray[i]["c"].ToObject<mlib>();
+                mlibU u = new mlibU();
+                u.libro = l;
+                int nums = 0;
+                int.TryParse(jsonArray[i]["urls"].ToString(), out nums);
+                u.numurls = nums;
+                libros.Add(u);
+            }
             return View(libros);
         }
 

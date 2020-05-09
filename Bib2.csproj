@@ -130,6 +130,7 @@
     <Compile Include="Models\Lecturas.cs" />
     <Compile Include="Models\Libro.cs" />
     <Compile Include="Models\mlib.cs" />
+    <Compile Include="Models\mlibU.cs" />
     <Compile Include="Models\Urls.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

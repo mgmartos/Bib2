@@ -123,7 +123,12 @@
 
                             </td>
                         <td align="center">@autor.Cantidad</td>
-                        <td align="center"><a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@autor.idAutor"><i class='fas fa-plug' style='font-size:12px'></i></a>  </td>
+                        <td align="center">
+                            @if (autor.Urls > 0)
+                            { 
+                            <a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@autor.idAutor"><i class='fas fa-plug' style='font-size:12px'></i></a>  
+                            }
+                        </td>
                         <td align="center"><a href="javascript:void(0);" class="linkADetail" id="ur" data-id="@autor.idAutor"><i class='fas fa-marker' style='font-size:12px'></i></a>  </td>
 
                     </tr>
