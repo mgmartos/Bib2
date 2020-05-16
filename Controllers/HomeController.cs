@@ -22,7 +22,8 @@ namespace Bib2.Controllers
     public class HomeController : Controller
     {
         private static string Token = "";
-        string WSRest = "http://localhost:1722/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
+        //string WSRest = "http://localhost:1722/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
+        string WSRest = "http://localhost/WebApi/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
 
 
         public ActionResult Index()
@@ -344,8 +345,50 @@ namespace Bib2.Controllers
             }
         }
 
+        public ActionResult editoriales()
+        {
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "editoriales/todas");
+            string json = GetWS(request);
+            JArray jsonArray = null;
+            jsonArray = JArray.Parse(json);
+            List<string> editor = jsonArray.ToObject<List<string>>();
+            for (int i=0;i<editor.Count;i++)
+            {
+                if (string.IsNullOrEmpty(editor[i]))
+                    editor[i] = "";
+            }
+            ViewBag.editoriales = editor.Select(t => new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = t.ToString(), Text = t.ToString() });
 
-            public ActionResult Contact()
+            request = (HttpWebRequest)WebRequest.Create(WSRest + "editoriales/librosedit?editorial=" + editor[0].ToString() + "&orden=autor");
+            string jsonl = GetWS(request);
+            JArray jsonArrayl = null;
+            jsonArrayl = JArray.Parse(jsonl);
+            List<mlib> libros = jsonArrayl.ToObject<List<mlib>>();
+            return View(libros);
+        }
+        [HttpPost]
+        public PartialViewResult _LibrosEditorial(string editorial)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "editoriales/todas");
+            string json = GetWS(request);
+            JArray jsonArray = null;
+            jsonArray = JArray.Parse(json);
+            List<string> editor = jsonArray.ToObject<List<string>>();
+            for (int i = 0; i < editor.Count; i++)
+            {
+                if (string.IsNullOrEmpty(editor[i]))
+                    editor[i] = "";
+            }
+            ViewBag.editoriales = editor.Select(t => new System.Web.Mvc.SelectListItem { Selected = (t.ToString() == editorial), Value = t.ToString(), Text = t.ToString() });
+            request = (HttpWebRequest)WebRequest.Create(WSRest + "editoriales/librosedit?editorial=" +editorial+"&orden=autor");
+            string jsonl = GetWS(request);
+            JArray jsonArrayl = null;
+            jsonArrayl = JArray.Parse(jsonl);
+            List<mlib> libros = jsonArrayl.ToObject<List<mlib>>(); 
+            return PartialView(libros);
+        }
+
+        public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
             string ret = PostWS("biblos/LibrosLetra", "letra="+"A");

@@ -201,6 +201,8 @@
     <Content Include="Views\Home\AltaAutor.cshtml" />
     <Content Include="Views\Home\AltaLectura.cshtml" />
     <Content Include="Views\Home\ListaLecturas.cshtml" />
+    <Content Include="Views\Home\editoriales.cshtml" />
+    <Content Include="Views\Home\_LibrosEditorial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,69 @@
+﻿@model List<Bib2.Models.mlib>
+@{
+    ViewBag.Title = "editoriales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#editoriales').change(function (e) {
+            $('#editorial').val($(this).find("option:selected").text());
+            var LinkURL = '/Home/_LibrosEditorial';
+            var ed = $('#editorial').val();
+            //$.ajax({
+            //    type: "POST",
+            //    url: LinkURL,
+            //    contentType: "application/json; charset=utf-8",
+            //    data: { 'editorial': ed },
+            //    datatype: "json",
+            //    success: function (data) {
+            //        //   debugger;
+            //        $('#dtable').html(data);
+            //    },
+            //    error: function () {
+            //        alert("Fallo en la carga del contenido dinámico.");
+            //    }
+            //});
+
+            //$.post('/Home/editoriales', { 'editorial': ed },
+            //    function (data, status) {
+            //        alert("Data: " + data + "\nStatus: " + status);
+            //        $('#dtable').html(data);
+            //    });
+            var data = { editorial: ed };
+            $.post(LinkURL, data).done(function (data) {
+                $('#dtable').html(data);
+            }).fail(function () { });
+
+        });
+    }); // del ready
+
+</script>
+@using (Html.BeginForm())
+{
+
+<div id="cuerpo">
+    <div style= "width:100%">
+        <div id="dselector">
+            <fieldset>
+                <legend>Editoriales</legend>
+                <div style="padding-bottom:10px;display:none">
+                    <input type="text" id="editorial" name="editorial" />
+                </div>
+                <div class="borde-inferior" style="padding-bottom:10px">
+                    @Html.DropDownList("editoriales")
+                </div>
+                <div class="form-group" style="display:none">
+                    <div class="col-md-offset-2 col-md-10" align="left">
+                        <input type="submit" value="Ver Libros" class="btn-default btn" id="bSubmit" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+       
+        <div id="dtable" align="center">
+           
+        </div>
+    </div>
+</div>
+}

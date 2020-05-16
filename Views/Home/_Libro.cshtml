@@ -34,6 +34,10 @@
 
                 </div>
                 <div align="left">
+                    <Label>@Html.DisplayNameFor(model => model.autor)</Label>
+                    <span>@Html.DisplayFor(model => model.autor)</span>
+                </div>
+                <div align="left">
                     <Label>@Html.DisplayNameFor(model => model.tema)</Label>
                     <span>@Html.DisplayFor(model => model.tema)</span>
 
@@ -43,8 +47,26 @@
                     <span>@Html.DisplayFor(model => model.paginas)</span>
                 </div>
                 <div align="left">
-                    <Label>@Html.DisplayNameFor(model => model.autor)</Label>
-                    <span>@Html.DisplayFor(model => model.autor)</span>
+                    @if (!string.IsNullOrEmpty(@Model.editorial))
+                    {
+                        <Label>@Html.DisplayNameFor(model => model.editorial)</Label>
+                        <span>@Html.DisplayFor(model => model.editorial)</span>
+                    }
+                </div>
+                <div align="left">
+                    @if (!string.IsNullOrEmpty(@Model.coleccion))
+                    {
+                        <Label>@Html.DisplayNameFor(model => model.coleccion)</Label>
+                        <span>@Html.DisplayFor(model => model.coleccion)</span>
+                    }
+                </div>
+
+                <div align="left">
+                    @if (!string.IsNullOrEmpty(@Model.fecha.ToString()))
+                    {
+                        <Label>@Html.DisplayNameFor(model => model.fecha)</Label>
+                        <span>@Html.DisplayFor(model => model.fecha)</span>
+                    }
                 </div>
                 <div align="left">
                     @if (!string.IsNullOrEmpty(@Model.comentario))

@@ -95,7 +95,7 @@
     });
 
 
-    var AuthURL = '/Home/_LibrosAutor';
+    var AuthURL = "@Url.Action("_LibrosAutor", "Home")";      // '/Home/_LibrosAutor';
     $(function () {
         $(".anchorDetailAuthor").click(function () {
             var $buttonClicked = $(this);

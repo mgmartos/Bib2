@@ -17,7 +17,8 @@
 
     //         En todas las tablas pone las filas pares con un color de fondo y las impares con otro
     $('table').find('tr:even').css({'background-color': '#f5f5f5' })
-                .end().find('tr:odd').css({'background-color': '#add8e6' });
+            .end().find('tr:odd').css({ 'background-color': '#add8e6' });
+
 
 
         // function que adorna la transición en anclas

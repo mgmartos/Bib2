@@ -131,7 +131,7 @@
             <fieldset style="padding-bottom:10px">
                 <legend>@Html.DisplayNameFor(Model => Model.coleccion)</legend>
                 <div class="borde-inferior" style="padding-bottom:10px;">
-                    @Html.EditorFor(Model => Model.coleccion, new { htmlAttributes = new { style = "width:100%" }, })
+                    @Html.EditorFor(Model => Model.coleccion, new { htmlAttributes = new { style = "width:100%", maxlength="25"  }, })
                 </div>
             </fieldset>
         </div>
