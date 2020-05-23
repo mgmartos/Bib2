@@ -125,83 +125,99 @@
     });
 
 </script>
+<script type="text/javascript">
+   $(document).ready(function(){
+        $(".loader").fadeOut("slow");
+    });
+</script>
+@*<div class="loader" align="center"><img src="~/img/cargando.png" height="50%" width="50%" /></div>*@
 
 
-
-<h2>Libros @Model.Count().ToString()</h2>
-<div id="Principal" style="">
-    <div class="modal fade col-12" id="myModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div id='myModalC'>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    <h2>Libros @Model.Count().ToString()</h2>
+    <div id="Principal" style="">
+        <div class="modal fade col-12" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalC'>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="Iniciales" align="center" style="padding-left: 9%;">
+        <div id="Iniciales" align="center" style="padding-left: 9%;">
 
 
-        <fieldset>
-            <ul id="Inicial" align="center">
-                @{
-                    <li class="horizontal">
-                        <a>
-                            @Html.ActionLink("#", "Libros", new { letra = "#" })
-                        </a>
-                    </li>
-                    for (char c = 'A'; c <= 'Z'; c++)
-                    {
+            <fieldset>
+                <ul id="Inicial" align="center">
+                    @{
                         <li class="horizontal">
                             <a>
-                                @Html.ActionLink(c.ToString(), "Libros", new { letra = c })
+                                @Html.ActionLink("#", "Libros", new { letra = "#" })
                             </a>
                         </li>
-                    }
-                }
-            </ul>
-        </fieldset>
-    </div>
-    <div id="ListaLibros" align="center">
-        <table id="tLibros" style="width:80%; border:thin" align="center">
-            <tr>
-                <th style="width:5.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.idLibro)</th>
-                <th style="width:45.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.titulo)</th>
-                <th style="width:30.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.autor)</th>
-                <th style="width:5.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.paginas)</th>
-                <th style="width:13.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.tema)</th>
-                <th style="width:5.00%" align="center"></th>
-                <th style="width:2.00%" align="center"></th>
-                <th style="width:2.00%" align="center"></th>
-
-            </tr>
-            @foreach (Bib2.Models.mlibU l in Model)
-            {
-                <tr>
-                    <td align="center">@Html.DisplayFor(modelItem => l.libro.idLibro)</td>
-                    <td align="left"><a href="javascript:void(0);" class="anchorDetail" id="ver" data-id="@l.libro.idLibro">@Html.DisplayFor(modelItem => l.libro.titulo)</a></td>
-                    <td align="left" style="text-transform:capitalize"><a href="javascript:void(0);" class="anchorDetailAuthor" id="ver" data-id="@l.libro.CodAutor">@Html.DisplayFor(modelItem => l.libro.autor)</a></td>
-                    <td>@Html.DisplayFor(modelItem => l.libro.paginas)</td>
-                    <td>@Html.DisplayFor(modelItem => l.libro.tema)</td>
-                    <td>@Html.ActionLink("Editar", "Alta", new { codigo = l.libro.idLibro })</td>
-                    <td align="center">
-                        @if (l.numurls > 0)
+                        for (char c = 'A'; c <= 'Z'; c++)
                         {
-                            <a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@l.libro.idLibro"><i class='fas fa-plug' style='font-size:12px'></i></a>
+                            <li class="horizontal">
+                                <a>
+                                    @Html.ActionLink(c.ToString(), "Libros", new { letra = c })
+                                </a>
+                            </li>
                         }
-                    </td> 
+                    }
+                </ul>
+            </fieldset>
+        </div>
+        <div id="ListaLibros" align="center">
 
-                    <td align="center"><a href="javascript:void(0);" class="linkADetail" id="ur" data-id="@l.libro.idLibro"><i class='fas fa-marker' style='font-size:12px'></i></a>  </td>
+            <div class="loader" style="width:100%; border:thin;padding-top:50px" align="center"><img src="~/img/cargando.png" height="50%" width="50%"/></div>
+
+            <table id="tLibros" style="width:80%; border:thin" align="center">
+                <tr>
+                    <th style="width:5.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.idLibro)</th>
+                    <th style="width:45.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.titulo)</th>
+                    <th style="width:30.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.autor)</th>
+                    <th style="width:5.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.paginas)</th>
+                    <th style="width:13.00%" align="center">@Html.DisplayNameFor(model => model[0].libro.tema)</th>
+                    <th style="width:5.00%" align="center"></th>
+                    <th style="width:2.00%" align="center"></th>
+                    <th style="width:2.00%" align="center"></th>
 
                 </tr>
-            }
-        </table>
-    </div>
-</div>
-<p>
-    @Html.ActionLink("Volver", "index")
-</p>
+                @foreach (Bib2.Models.mlibU l in Model)
+                {
+                    <tr>
+                        <td align="center">@Html.DisplayFor(modelItem => l.libro.idLibro)</td>
+                        <td align="left"><a href="javascript:void(0);" class="anchorDetail" id="ver" data-id="@l.libro.idLibro">@Html.DisplayFor(modelItem => l.libro.titulo)</a></td>
+                        <td align="left" style="text-transform:capitalize"><a href="javascript:void(0);" class="anchorDetailAuthor" id="ver" data-id="@l.libro.CodAutor">@Html.DisplayFor(modelItem => l.libro.autor)</a></td>
+                        <td>@Html.DisplayFor(modelItem => l.libro.paginas)</td>
+                        <td>@Html.DisplayFor(modelItem => l.libro.tema)</td>
+                        <td>@Html.ActionLink("Editar", "Alta", new { codigo = l.libro.idLibro })</td>
+                        <td align="center">
+                            @if (l.numurls > 0)
+                            {
+                                <a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@l.libro.idLibro"><i class='fas fa-plug' style='font-size:12px'></i></a>
+                            }
+                        </td>
 
+                        <td align="center"><a href="javascript:void(0);" class="linkADetail" id="ur" data-id="@l.libro.idLibro"><i class='fas fa-marker' style='font-size:12px'></i></a>  </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <p>
+        @Html.ActionLink("Volver", "index")
+    </p>
+
+@if (@Model.Count() > 40)
+{ 
+    <div align="right">
+        <a href="#Iniciales">
+            <img alt="Arriba" id="imgArriba" src="~/img/FlechaArriba.png" height="24" width="24" />
+        </a>
+    </div>
+}

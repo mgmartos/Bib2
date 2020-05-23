@@ -17,15 +17,18 @@ using Newtonsoft.Json.Linq;
 using Bib2.Models;
 
 
+
+
+
+
 namespace Bib2.Controllers
 {
     public class HomeController : Controller
     {
         private static string Token = "";
         //string WSRest = "http://localhost:1722/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
-        string WSRest = "http://localhost/WebApi/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
-
-
+        //string WSRest = "http://localhost/WebApi/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
+        string WSRest = System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
         public ActionResult Index()
         {
 
@@ -218,7 +221,8 @@ namespace Bib2.Controllers
             var request = (HttpWebRequest)WebRequest.Create(WSRest + "lecturas/todos");
             string json = GetWS(request);
             JArray jsonArray = JArray.Parse(json);
-            List<Lecturas> lecturas = jsonArray.ToObject<List<Lecturas>>();
+            List<Lecturas> lecturas = jsonArray.ToObject<List<Lecturas>>().OrderByDescending(l => l.fecha).ToList();
+
             return View(lecturas);
         }
 
@@ -352,11 +356,12 @@ namespace Bib2.Controllers
             JArray jsonArray = null;
             jsonArray = JArray.Parse(json);
             List<string> editor = jsonArray.ToObject<List<string>>();
-            for (int i=0;i<editor.Count;i++)
-            {
-                if (string.IsNullOrEmpty(editor[i]))
-                    editor[i] = "";
-            }
+            editor.Insert(0, " ");
+            //for (int i=0;i<editor.Count;i++)
+            //{
+            //    if (string.IsNullOrEmpty(editor[i]))
+            //        editor[i] = "";
+            //}
             ViewBag.editoriales = editor.Select(t => new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = t.ToString(), Text = t.ToString() });
 
             request = (HttpWebRequest)WebRequest.Create(WSRest + "editoriales/librosedit?editorial=" + editor[0].ToString() + "&orden=autor");
