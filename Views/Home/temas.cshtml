@@ -1,46 +1,23 @@
 ﻿@model List<Bib2.Models.mlib>
 @{
-    ViewBag.Title = "editoriales";
+    ViewBag.Title = "Temas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#editoriales').change(function (e) {
-            $('#editorial').val($(this).find("option:selected").text());
-            var LinkURL = '/Home/_LibrosEditorial';
-            var ed = $('#editorial').val();
-            //$.ajax({
-            //    type: "POST",
-            //    url: LinkURL,
-            //    contentType: "application/json; charset=utf-8",
-            //    data: { 'editorial': ed },
-            //    datatype: "json",
-            //    success: function (data) {
-            //        //   debugger;
-            //        $('#dtable').html(data);
-            //    },
-            //    error: function () {
-            //        alert("Fallo en la carga del contenido dinámico.");
-            //    }
-            //});
-
-            //$.post('/Home/editoriales', { 'editorial': ed },
-            //    function (data, status) {
-            //        alert("Data: " + data + "\nStatus: " + status);
-            //        $('#dtable').html(data);
-            //    });
-            var data = { editorial: ed };
+        $('#temas').change(function (e) {
+            $('#tema').val($(this).find("option:selected").text());
+            var LinkURL = '/Home/_LibrosTema';
+            var ed = $('#tema').val();
+           
+            var data = { tema: ed , orden:'tit'};
             $.post(LinkURL, data).done(function (data) {
                 $('#dtable').html(data);
             }).fail(function () { });
 
         });
 
-
-
-
-
-           $(function () {
+        $(function () {
             $("table td").hover(
                 function () {
                     $("td", $(this).closest("tr")).addClass("hover_row");
@@ -57,21 +34,6 @@
             .end().find('tr:odd').css({ 'background-color': '#add8e6' });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }); // del ready
 
 </script>
@@ -82,12 +44,12 @@
         <div style="width:100%">
             <div id="dselector">
                 <fieldset>
-                    <legend>Editoriales</legend>
+                    <legend>Temas</legend>
                     <div style="padding-bottom:10px;display:none">
-                        <input type="text" id="editorial" name="editorial" />
+                        <input type="text" id="tema" name="tema" />
                     </div>
                     <div class="borde-inferior" style="padding-bottom:10px">
-                        @Html.DropDownList("editoriales")
+                        @Html.DropDownList("temas")
                     </div>
                     <div class="form-group" style="display:none">
                         <div class="col-md-offset-2 col-md-10" align="left">

@@ -351,7 +351,7 @@ namespace Bib2.Controllers
 
         public ActionResult editoriales()
         {
-            var request = (HttpWebRequest)WebRequest.Create(WSRest + "editoriales/todas");
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "varios/todas");
             string json = GetWS(request);
             JArray jsonArray = null;
             jsonArray = JArray.Parse(json);
@@ -364,7 +364,7 @@ namespace Bib2.Controllers
             //}
             ViewBag.editoriales = editor.Select(t => new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = t.ToString(), Text = t.ToString() });
 
-            request = (HttpWebRequest)WebRequest.Create(WSRest + "editoriales/librosedit?editorial=" + editor[0].ToString() + "&orden=autor");
+            request = (HttpWebRequest)WebRequest.Create(WSRest + "varios/librosedit?editorial=" + editor[0].ToString() + "&orden=autor");
             string jsonl = GetWS(request);
             JArray jsonArrayl = null;
             jsonArrayl = JArray.Parse(jsonl);
@@ -372,9 +372,9 @@ namespace Bib2.Controllers
             return View(libros);
         }
         [HttpPost]
-        public PartialViewResult _LibrosEditorial(string editorial)
+        public PartialViewResult _LibrosEditorial(string editorial, string orden = "")
         {
-            var request = (HttpWebRequest)WebRequest.Create(WSRest + "editoriales/todas");
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "varios/todas");
             string json = GetWS(request);
             JArray jsonArray = null;
             jsonArray = JArray.Parse(json);
@@ -385,14 +385,51 @@ namespace Bib2.Controllers
                     editor[i] = "";
             }
             ViewBag.editoriales = editor.Select(t => new System.Web.Mvc.SelectListItem { Selected = (t.ToString() == editorial), Value = t.ToString(), Text = t.ToString() });
-            request = (HttpWebRequest)WebRequest.Create(WSRest + "editoriales/librosedit?editorial=" +editorial+"&orden=autor");
+            request = (HttpWebRequest)WebRequest.Create(WSRest + "varios/librosedit?editorial=" + editorial+"&orden="+orden);
             string jsonl = GetWS(request);
             JArray jsonArrayl = null;
             jsonArrayl = JArray.Parse(jsonl);
             List<mlib> libros = jsonArrayl.ToObject<List<mlib>>(); 
             return PartialView(libros);
         }
+        public ActionResult temas()
+        {
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "varios/temas");
+            string json = GetWS(request);
+            JArray jsonArray = null;
+            jsonArray = JArray.Parse(json);
+            List<string> temario = jsonArray.ToObject<List<string>>();
+            temario.Insert(0, " ");
+            ViewBag.temas = temario.Select(t => new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == idAutor),*/ Value = t.ToString(), Text = t.ToString() });
+            request = (HttpWebRequest)WebRequest.Create(WSRest + "varios/librostema?tema=" + temario[0].ToString() + "&orden=autor");
+            string jsonl = GetWS(request);
+            JArray jsonArrayl = null;
+            jsonArrayl = JArray.Parse(jsonl);
+            List<mlib> libros = jsonArrayl.ToObject<List<mlib>>();
+            return View(libros);
+        }
 
+        [HttpPost]
+        public PartialViewResult _LibrosTema(string tema, string orden="")
+        {
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "varios/temas");
+            string json = GetWS(request);
+            JArray jsonArray = null;
+            jsonArray = JArray.Parse(json);
+            List<string> temario = jsonArray.ToObject<List<string>>();
+            for (int i = 0; i < temario.Count; i++)
+            {
+                if (string.IsNullOrEmpty(temario[i]))
+                    temario[i] = "";
+            }
+            ViewBag.editoriales = temario.Select(t => new System.Web.Mvc.SelectListItem { Selected = (t.ToString() == tema), Value = t.ToString(), Text = t.ToString() });
+            request = (HttpWebRequest)WebRequest.Create(WSRest + "varios/librostema?tema=" + tema + "&orden="+orden);
+            string jsonl = GetWS(request);
+            JArray jsonArrayl = null;
+            jsonArrayl = JArray.Parse(jsonl);
+            List<mlib> libros = jsonArrayl.ToObject<List<mlib>>();
+            return PartialView(libros);
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

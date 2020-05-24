@@ -82,7 +82,8 @@
                 <th style="width:5.00%">Código</th>
                 <th style="width:70.00%">Título</th>
                 <th style="width:15.00%">Tema</th>
-                <th style="width:10.00%">Pág.</th>
+                <th style="width:5.00%"></th>
+                <th style="width:5.00%">Pág.</th>
             </tr>
             @foreach (Bib2.Models.mlib libro in @Model)
             {
@@ -91,6 +92,7 @@
             <td>@Html.DisplayFor(Model => libro.titulo)</td>
             <td>@Html.DisplayFor(Model => libro.tema)</td>
             <td>@Html.DisplayFor(Model => libro.paginas)</td>
+            <td>@Html.ActionLink("Editar", "Alta", new { codigo = libro.idLibro })</td>
             <td align="center"><a href="javascript:void(0);" class="anchorDetail" id="ver" data-id="@libro.idLibro">Ver</a>  </td>
         </tr>
             }

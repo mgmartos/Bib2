@@ -3,7 +3,7 @@
 <div class="form-horizontal" style="padding:10px">
     <div class="form-group" style="padding:5px">
         @*<h4>Libros</h4>*@
-        @{
+        @{ 
             int number = 1;
         }
         @if (Model.Count > 0)
@@ -17,18 +17,21 @@
                             <th style="width:5.00%">Cod.</th>
                             <th style="width:40.00%">Título</th>
                             <th style="width:30.00%">Autor</th>
-                            <th style="width:20.00%">Tema</th>
+                            <th style="width:20.00%">Editorial</th>
                         </tr>
+                      
                         @foreach (Bib2.Models.mlib l in Model)
                         {
+                          
+
                     <tr>
                         <td align="left">@number</td>
                         <td align="center">@Html.DisplayFor(modelItem => l.idLibro)</td>
                         <td>@Html.DisplayFor(model => l.titulo)</td>
                         <td>@Html.DisplayFor(modelItem => l.autor)</td>
-                        <td>@Html.DisplayFor(modelItem => l.tema)</td>
+                        <td>@Html.DisplayFor(modelItem => l.editorial)</td>
                     </tr>
-                            number++;
+                            number = number + 1;
                         }
                     </table>
                 </div>
