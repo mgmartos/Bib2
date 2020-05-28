@@ -15,12 +15,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Bib2.Models;
-
-
-
-
-
-
+using Bib2.Library;
 namespace Bib2.Controllers
 {
     public class HomeController : Controller
@@ -29,6 +24,8 @@ namespace Bib2.Controllers
         //string WSRest = "http://localhost:1722/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
         //string WSRest = "http://localhost/WebApi/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
         string WSRest = System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
+        private static DataPaginador<Lecturas> models;
+
         public ActionResult Index()
         {
 
@@ -224,6 +221,26 @@ namespace Bib2.Controllers
             List<Lecturas> lecturas = jsonArray.ToObject<List<Lecturas>>().OrderByDescending(l => l.fecha).ToList();
 
             return View(lecturas);
+        }
+
+        public ActionResult ListaLecturas2(int id=0, int Registros=20)
+        {
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "lecturas/todos");
+            string json = GetWS(request);
+            JArray jsonArray = JArray.Parse(json);
+            List<Lecturas> lecturas = jsonArray.ToObject<List<Lecturas>>().OrderByDescending(l => l.fecha).ToList();
+            ViewBag.cantidad = lecturas.Count().ToString();
+            //return View(lecturas);
+            var url = System.Web.HttpContext.Current.Request.Url.Host;
+            var objects = new Bib2.Library.LPaginador<Lecturas>().paginador(lecturas,id, Registros, "Home", "ListaLecturas2", url);
+            models = new DataPaginador<Lecturas>
+            {
+                List = (List<Lecturas>)objects[2],
+                Pagi_info = (String)objects[0],
+                Pagi_navegacion = (String)objects[1],
+                Input = new Lecturas()
+            };
+            return View(models);
         }
 
 
@@ -429,6 +446,11 @@ namespace Bib2.Controllers
             jsonArrayl = JArray.Parse(jsonl);
             List<mlib> libros = jsonArrayl.ToObject<List<mlib>>();
             return PartialView(libros);
+        }
+
+        public ActionResult pagprueba()
+        {
+            return View();
         }
         public ActionResult Contact()
         {

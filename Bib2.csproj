@@ -124,9 +124,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Library\LPaginador.cs" />
     <Compile Include="Models\Autores.cs" />
     <Compile Include="Models\AutoresL.cs" />
     <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\DataPaginador.cs" />
     <Compile Include="Models\Lecturas.cs" />
     <Compile Include="Models\Libro.cs" />
     <Compile Include="Models\mlib.cs" />
@@ -205,6 +207,8 @@
     <Content Include="Views\Home\_LibrosEditorial.cshtml" />
     <Content Include="Views\Home\temas.cshtml" />
     <Content Include="Views\Home\_LibrosTema.cshtml" />
+    <Content Include="Views\Home\pagprueba.cshtml" />
+    <Content Include="Views\Home\ListaLecturas2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

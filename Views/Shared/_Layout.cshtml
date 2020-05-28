@@ -84,26 +84,31 @@
                     <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                     <li>@Html.ActionLink("Autores", "autores", "Home")</li>
                     <li>@Html.ActionLink("Libros", "Libros", "Home")</li>
-                    <li>@Html.ActionLink("Lecturas", "ListaLecturas", "Home")</li>
+                    <li>@Html.ActionLink("Lecturas", "ListaLecturas2", "Home")</li>
                     <li>@Html.ActionLink("Editoriales", "editoriales", "Home")</li>
                     <li>@Html.ActionLink("Temas", "temas", "Home")</li>
                     <li>@Html.ActionLink("Nuevo Libro", "Alta", "Home")</li>
                     <li>@Html.ActionLink("Nuevo Autor", "AltaAutor", "Home")</li>
                     <li>@Html.ActionLink("Nueva Lectura", "AltaLectura", "Home")</li>
+                    <li>@Html.ActionLink("Pag. Pruebas", "pagprueba", "Home")</li>
+
+
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer style="padding-left:5%">
-            <p>&copy; @DateTime.Now.Year - Biblos MGM</p>
-        </footer>
+
+            @RenderBody()
+            <hr />
+            <footer style="padding-left:5%">
+                <p>&copy; @DateTime.Now.Year - Biblos MGM</p>
+            </footer>
+
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>
