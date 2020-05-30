@@ -15,7 +15,7 @@ table, th {
 table, td {
     border: 1px solid black;
     border-collapse: collapse;
-    font: normal,8px,arial;
+    font: normal,18px,arial;
     font-size:smaller; 
     padding-left: 10px }
 

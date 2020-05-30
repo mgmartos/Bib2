@@ -93,7 +93,7 @@
         </div>
         <fieldset>
             <legend>@Html.DisplayNameFor(model => model.titulo)</legend>
-            <div class="borde-inferior" style="padding-bottom:10px">
+            <div class="borde-inferior" style="padding-bottom:7px">
                 @*@Html.EditorFor(Model => Model.idLibro, new { htmlAttributes = new { style = "width: 15%" }, })
                     @if (string.IsNullOrEmpty(@Model.titulo))
                     {
@@ -106,8 +106,8 @@
         </fieldset>
         <fieldset>
             <legend>@Html.DisplayNameFor(model => model.autor)</legend>
-            <div class="borde-inferior" style="padding-bottom:10px">
-                <div style="padding-bottom:10px; display:none">
+            <div class="borde-inferior" style="padding-bottom:7px">
+                <div style="padding-bottom:7px; display:none">
                     @Html.EditorFor(Model => Model.CodAutor, new { htmlAttributes = new { style = "width: 10%;" }, })
                     @Html.EditorFor(Model => Model.autor, new { htmlAttributes = new { style = "width: 90%;" }, })
                 </div>
@@ -123,14 +123,14 @@
         </fieldset>
         <fieldset>
             <legend>@Html.DisplayNameFor(Model => Model.editorial)</legend>
-            <div class="borde-inferior" style="padding-bottom:10px">
+            <div class="borde-inferior" style="padding-bottom:7px">
                 @Html.EditorFor(Model => Model.editorial, new { htmlAttributes = new { style = "width:75%" }, })
             </div>
         </fieldset>
         <div>
-            <fieldset style="padding-bottom:10px">
+            <fieldset style="padding-bottom:7px">
                 <legend>@Html.DisplayNameFor(Model => Model.coleccion)</legend>
-                <div class="borde-inferior" style="padding-bottom:10px;">
+                <div class="borde-inferior" style="padding-bottom:7px;">
                     @Html.EditorFor(Model => Model.coleccion, new { htmlAttributes = new { style = "width:100%", maxlength="25"  }, })
                 </div>
             </fieldset>

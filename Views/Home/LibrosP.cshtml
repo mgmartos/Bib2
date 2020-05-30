@@ -1,0 +1,230 @@
+﻿@model Bib2.Models.DataPaginador<Bib2.Models.mlibU>
+@*@model List<Bib2.Models.mlibU>*@
+@{
+
+    ViewBag.Title = "Libros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    var DetailURL = '/Home/_Libro';
+    $(function () {
+        $(".anchorDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: DetailURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "codigo": id },
+                datatype: "json",
+                success: function (data) {
+                    //   debugger;
+                    $('#myModalC').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Fallo en la carga del contenido dinámico.");
+                }
+            });
+        });
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+
+    var LinkURL = '/Home/_Links';
+    $(function () {
+        $(".linkDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: LinkURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "tipo": 1, "codigo": id },
+                datatype: "json",
+                success: function (data) {
+                    //   debugger;
+                    $('#myModalC').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Fallo en la carga del contenido dinámico.");
+                }
+            });
+        });
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+    var LinkURLA = '/Home/AltaLink';
+    $(function () {
+        $(".linkADetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: LinkURLA,
+                contentType: "application/json; charset=utf-8",
+                data: { "tipo": 1, "codigo_padre": id },
+                datatype: "json",
+                success: function (data) {
+                    //   debugger;
+                    $('#myModalC').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Fallo en la carga del contenido dinámico.");
+                }
+            });
+        });
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+
+    var AuthURL = "@Url.Action("_LibrosAutor", "Home")";      // '/Home/_LibrosAutor';
+    $(function () {
+        $(".anchorDetailAuthor").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: AuthURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "codigo": id },
+                datatype: "json",
+                success: function (data) {
+                    //   debugger;
+                    $('#myModalC').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Fallo en la carga del contenido dinámico.");
+                }
+            });
+        });
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".loader").fadeOut("slow");
+    });
+</script>
+@*<div class="loader" align="center"><img src="~/img/cargando.png" height="50%" width="50%" /></div>*@
+
+
+<h2>Libros</h2>
+<div id="Principal" style="">
+    <div class="modal fade col-12" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalC'>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Iniciales" align="center" style="padding-left: 9%;">
+
+
+        <fieldset>
+            <ul id="Inicial" align="center">
+                @{
+                    <li class="horizontal">
+                        <a>
+                            @Html.ActionLink("#", "Libros", new { letra = "#" })
+                        </a>
+                    </li>
+                    for (char c = 'A'; c <= 'Z'; c++)
+                    {
+                        <li class="horizontal">
+                            <a>
+                                @Html.ActionLink(c.ToString(), "LibrosP", new { letra = c })
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </fieldset>
+    </div>
+    <div id="ListaLibros" align="center">
+
+        <div class="loader" style="width:100%; border:thin;padding-top:50px" align="center"><img src="~/img/cargando.png" height="50%" width="50%" /></div>
+
+        <table id="tLibros" style="width:80%; border:thin" align="center">
+            <tr>
+                <th style="width:5.00%" align="center">@Html.DisplayNameFor(model => model.Input.libro.idLibro)</th>
+                <th style="width:45.00%" align="center">@Html.DisplayNameFor(model => model.Input.libro.titulo)</th>
+                <th style="width:30.00%" align="center">@Html.DisplayNameFor(model => model.Input.libro.autor)</th>
+                <th style="width:5.00%" align="center">@Html.DisplayNameFor(model => model.Input.libro.paginas)</th>
+                <th style="width:13.00%" align="center">@Html.DisplayNameFor(model => model.Input.libro.tema)</th>
+                <th style="width:5.00%" align="center"></th>
+                <th style="width:2.00%" align="center"></th>
+                <th style="width:2.00%" align="center"></th>
+
+            </tr>
+            @foreach (Bib2.Models.mlibU l in Model.List)
+            {
+                <tr>
+                    <td align="center">@Html.DisplayFor(modelItem => l.libro.idLibro)</td>
+                    <td align="left"><a href="javascript:void(0);" class="anchorDetail" id="ver" data-id="@l.libro.idLibro">@Html.DisplayFor(modelItem => l.libro.titulo)</a></td>
+                    <td align="left" style="text-transform:capitalize"><a href="javascript:void(0);" class="anchorDetailAuthor" id="ver" data-id="@l.libro.CodAutor">@Html.DisplayFor(modelItem => l.libro.autor)</a></td>
+                    <td>@Html.DisplayFor(modelItem => l.libro.paginas)</td>
+                    <td>@Html.DisplayFor(modelItem => l.libro.tema)</td>
+                    <td>@Html.ActionLink("Editar", "Alta", new { codigo = l.libro.idLibro })</td>
+                    <td align="center">
+                        @if (l.numurls > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@l.libro.idLibro"><i class='fas fa-plug' style='font-size:12px'></i></a>
+                        }
+                    </td>
+
+                    <td align="center"><a href="javascript:void(0);" class="linkADetail" id="ur" data-id="@l.libro.idLibro"><i class='fas fa-marker' style='font-size:12px'></i></a>  </td>
+
+                </tr>
+            }
+        </table>
+        <div>
+            <br />
+            Resultados @Html.Raw(Model.Pagi_info)
+            <br /><br />
+            @Html.Raw(Model.Pagi_navegacion)
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Volver", "index")
+</p>
+
+@*@if (@Model.Count() > 40)
+{
+    <div align="right">
+        <a href="#Iniciales">
+            <img alt="Arriba" id="imgArriba" src="~/img/FlechaArriba.png" height="24" width="24" />
+        </a>
+    </div>
+}*@

@@ -1,0 +1,52 @@
+﻿@model List<Bib2.Models.mlib>
+<script type="text/javascript">
+$(document).ready(function () {
+
+                $(function () {
+            $("table td").hover(
+                function () {
+                    $("td", $(this).closest("tr")).addClass("hover_row");
+                },
+                function () {
+                    $("td", $(this).closest("tr")).removeClass("hover_row");
+                }
+            );
+
+        });
+
+        //         En todas las tablas pone las filas pares con un color de fondo y las impares con otro
+        $('table').find('tr:even').css({ 'background-color': '#f5f5f5' })
+            .end().find('tr:odd').css({ 'background-color': '#add8e6' });
+            $(".loader").fadeOut("slow");
+    }); // del ready
+
+</script>
+
+@if (Model.Count() > 0)
+{
+    <div class="loader" style="width:100%; border:thin;padding-top:50px" align="center"><img src="~/img/cargando.png" height="50%" width="50%" /></div>
+
+    <div style="width:100%; border:thin;padding:10px">
+        <table id="tLibros" style="width:95%; border:thin" align="center">
+            <tr>
+                <th style="width:5.00%">Código</th>
+                <th style="width:50.00%">Título</th>
+                <th style="width:25.00%">Autor</th>
+                <th style="width:15.00%">Tema</th>
+
+                <th style="width:5.00%">Pág.</th>
+            </tr>
+            @foreach (Bib2.Models.mlib libro in @Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(Model => libro.idLibro)</td>
+                    <td>@Html.DisplayFor(Model => libro.titulo)</td>
+                    <td>@Html.DisplayFor(Model => libro.autor)</td>
+                    <td>@Html.DisplayFor(Model => libro.tema)</td>
+                    <td>@Html.DisplayFor(Model => libro.paginas)</td>
+
+                </tr>
+            }
+        </table>
+    </div>
+}

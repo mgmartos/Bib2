@@ -25,6 +25,7 @@ namespace Bib2.Controllers
         //string WSRest = "http://localhost/WebApi/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
         string WSRest = System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
         private static DataPaginador<Lecturas> models;
+        private static DataPaginador<mlibU> models_mlibu;
 
         public ActionResult Index()
         {
@@ -281,13 +282,13 @@ namespace Bib2.Controllers
         }
 
 
-        public ActionResult Libros(string letra="A")
+        public ActionResult Libros(string letra = "#")
         {
             string ret = PostWS("biblos/LibrosLetra", "letra=" + letra.ToString());
             JArray jsonArray = JArray.Parse(ret);
             //List<mlibU> libros = jsonArray.ToObject<List<mlibU>>();
             List<mlibU> libros = new List<mlibU>();
-            for (int i=0;i<jsonArray.Count;i++)
+            for (int i = 0; i < jsonArray.Count; i++)
             {
                 mlib l = jsonArray[i]["c"].ToObject<mlib>();
                 mlibU u = new mlibU();
@@ -298,6 +299,36 @@ namespace Bib2.Controllers
                 libros.Add(u);
             }
             return View(libros);
+        }
+        public ActionResult LibrosP(string letra = "#", int id = 0, int Registros = 25)
+        {
+            string ret = PostWS("biblos/LibrosLetra", "letra=" + letra.ToString());
+            JArray jsonArray = JArray.Parse(ret);
+            //List<mlibU> libros = jsonArray.ToObject<List<mlibU>>();
+            List<mlibU> libros = new List<mlibU>();
+            for (int i = 0; i < jsonArray.Count; i++)
+            {
+                mlib l = jsonArray[i]["c"].ToObject<mlib>();
+                mlibU u = new mlibU();
+                u.libro = l;
+                int nums = 0;
+                int.TryParse(jsonArray[i]["urls"].ToString(), out nums);
+                u.numurls = nums;
+                libros.Add(u);
+            }
+            //return View(libros);
+            var url = System.Web.HttpContext.Current.Request.Url.Host;
+            var objects = new Bib2.Library.LPaginador<mlibU>().paginador(libros, id, Registros, "Home", "LibrosP", url,letra);
+            models_mlibu = new DataPaginador<mlibU>
+            {
+                List = (List<mlibU>)objects[2],
+                Pagi_info = (String)objects[0],
+                Pagi_navegacion = (String)objects[1],
+                Input = new mlibU()
+            };
+            return View(models_mlibu);
+
+
         }
 
 
@@ -388,6 +419,28 @@ namespace Bib2.Controllers
             List<mlib> libros = jsonArrayl.ToObject<List<mlib>>();
             return View(libros);
         }
+
+
+        public ActionResult buscarlibros()
+        {
+            List<mlib> libros = new List<mlib>();
+            return View(libros);
+        }
+        [HttpPost]
+        public PartialViewResult _buscarlibros(string titulo, string autor)
+        {
+            if (string.IsNullOrEmpty(titulo) && string.IsNullOrEmpty(autor))
+            {
+                return PartialView(new List<mlib>());
+            }
+            var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/buscar?titulo=" + titulo + "&autor=" + autor);
+            string json = GetWS(request);
+            JArray jsonArray = null;
+            jsonArray = JArray.Parse(json);
+            List<mlib> libros = jsonArray.ToObject<List<mlib>>();
+            return PartialView(libros);
+        }
+
         [HttpPost]
         public PartialViewResult _LibrosEditorial(string editorial, string orden = "")
         {

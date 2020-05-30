@@ -56,10 +56,11 @@
 
             li {
                 font-size: 1.0em;
+            
             }
 
             th, td, a {
-                font-size: 1.0em;
+                font-size: 1.1em;
                 font-weight: normal;
             }
             /* fin de la zona para más de 1200px de ancho de pantalla */
@@ -69,7 +70,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:gainsboro">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -80,17 +81,18 @@
                 @Html.ActionLink("Biblos 2020 ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav"">
                     <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                     <li>@Html.ActionLink("Autores", "autores", "Home")</li>
-                    <li>@Html.ActionLink("Libros", "Libros", "Home")</li>
+                    <li>@Html.ActionLink("Libros", "LibrosP", "Home")</li>
+                    <li>@Html.ActionLink("Buscar Libros", "buscarlibros", "Home")</li>
                     <li>@Html.ActionLink("Lecturas", "ListaLecturas2", "Home")</li>
                     <li>@Html.ActionLink("Editoriales", "editoriales", "Home")</li>
                     <li>@Html.ActionLink("Temas", "temas", "Home")</li>
                     <li>@Html.ActionLink("Nuevo Libro", "Alta", "Home")</li>
                     <li>@Html.ActionLink("Nuevo Autor", "AltaAutor", "Home")</li>
                     <li>@Html.ActionLink("Nueva Lectura", "AltaLectura", "Home")</li>
-                    <li>@Html.ActionLink("Pag. Pruebas", "pagprueba", "Home")</li>
+                    @*<li>@Html.ActionLink("Pag. Pruebas", "pagprueba", "Home")</li>*@
 
 
                 </ul>

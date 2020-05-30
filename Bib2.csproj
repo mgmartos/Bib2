@@ -209,6 +209,9 @@
     <Content Include="Views\Home\_LibrosTema.cshtml" />
     <Content Include="Views\Home\pagprueba.cshtml" />
     <Content Include="Views\Home\ListaLecturas2.cshtml" />
+    <Content Include="Views\Home\LibrosP.cshtml" />
+    <Content Include="Views\Home\buscarlibros.cshtml" />
+    <Content Include="Views\Home\_buscarlibros.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

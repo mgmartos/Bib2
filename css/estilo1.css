@@ -1,6 +1,6 @@
 ﻿
 
-h1 {color:darkgray;}
+h1 {color:darkblue;}
 h2 {
     color:ThreeDDarkShadow;
     background-color:transparent;
@@ -53,7 +53,7 @@ input[type=text], input[type=date], input[type=number]
 select {
     background-color: transparent;
     font-family: "Times New Roman", Times, serif;
-    font-size: 12px;
+    font-size: 18px;
     border-style: groove;
     border-width: 1px;
     border-collapse: separate;

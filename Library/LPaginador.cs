@@ -22,8 +22,13 @@ namespace Bib2.Library
         private String pagi_navegacion = null;
 
         public object[] paginador(List<T> table, int pagina, int Registros, String controller, 
-            String action, String host)
+            String action, String host, String letra = "")
         {
+            String Sletr= "";
+            if (letra.Length == 1)
+            {
+                Sletr = ("letra="+letra+"&");
+            }
             if (Registros > 0)
             {
                 pagi_cuantos = Registros;
@@ -43,22 +48,27 @@ namespace Bib2.Library
             }
             int pagi_totalReg = table.Count;
             int pagi_totalRegs = pagi_totalReg;
+            //if ((pagi_totalReg % pagi_cuantos) > 0)
+            //{
+            //    pagi_totalRegs += 2;
+            //}
+            int pagi_totalPags = pagi_totalReg / pagi_cuantos;
             if ((pagi_totalReg % pagi_cuantos) > 0)
             {
-                pagi_totalRegs += 2;
+                pagi_totalPags++;
             }
-            int pagi_totalPags = pagi_totalRegs / pagi_cuantos;
+
             if (pagi_actual != 1)
             {
                 // Si no estamos en la página 1. Ponemos el enlace "primera" 
                 int pagi_url = 1; //será el número de página al que enlazamos 
                 pagi_navegacion += "<a class='btn btn-default' href='" +/*host +*/ "/" + controller + "/" + action
-                    + "?id=" + pagi_url + "&Registros=" + pagi_cuantos +  "'>" + pagi_nav_primera + "</a>";
+                    + "?" + Sletr + "id=" + pagi_url + "&Registros=" + pagi_cuantos +  "'>" + pagi_nav_primera + "</a>";
 
                 // Si no estamos en la página 1. Ponemos el enlace "anterior" 
                 pagi_url = pagi_actual - 1; //será el número de página al que enlazamos 
                 pagi_navegacion += "<a class='btn btn-default' href='" +/*host +*/ "/" + controller + "/" + action 
-                    + "?id=" + pagi_url + "&Registros=" + pagi_cuantos +  "'>" + pagi_nav_anterior + " </a>";
+                    + "?" + Sletr + "id=" + pagi_url + "&Registros=" + pagi_cuantos +  "'>" + pagi_nav_anterior + " </a>";
             }
             // Si se definió la variable pagi_nav_num_enlaces 
             // Calculamos el intervalo para restar y sumar a partir de la página actual 
@@ -104,7 +114,7 @@ namespace Bib2.Library
                 {
                     // Si es cualquier otro. Se escribe el enlace a dicho número de página. 
                     pagi_navegacion += "<a class='btn btn-default' href='" +/*host +*/ "/" + controller + "/" +
-                        action + "?id=" + pagi_i + "&Registros=" + pagi_cuantos +  "'>" + 
+                        action + "?" + Sletr + "id=" + pagi_i + "&Registros=" + pagi_cuantos +  "'>" + 
                         pagi_i + " </a>";
                 }
             }
@@ -113,13 +123,13 @@ namespace Bib2.Library
                 // Si no estamos en la última página. Ponemos el enlace "Siguiente" 
                 int pagi_url = pagi_actual + 1; //será el número de página al que enlazamos 
                 pagi_navegacion += "<a class='btn btn-default' href='" +/*host +*/ "/" + controller + "/" + 
-                    action + "?id=" + pagi_url + "&Registros=" + pagi_cuantos + "'>" +
+                    action + "?" + Sletr + "id=" + pagi_url + "&Registros=" + pagi_cuantos + "'>" +
                     pagi_nav_siguiente + "</a>";
 
                 // Si no estamos en la última página. Ponemos el enlace "Última" 
                 pagi_url = pagi_totalPags; //será el número de página al que enlazamos 
                 pagi_navegacion += "<a class='btn btn-default' href='" +/*host +*/ "/" + controller + "/" + 
-                    action + "?id=" + pagi_url + "&Registros=" + pagi_cuantos +  "'>" +
+                    action + "?" + Sletr + "id=" + pagi_url + "&Registros=" + pagi_cuantos +  "'>" +
                     pagi_nav_ultima + "</a>";
             }
             /* 

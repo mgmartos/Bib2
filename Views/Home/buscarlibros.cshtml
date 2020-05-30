@@ -1,0 +1,66 @@
+﻿@model List<Bib2.Models.mlib>
+@{
+    ViewBag.Title = "buscar-libros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#titulo,#autor').keyup(function (e) {
+               
+                var LinkURL = '/Home/_buscarlibros';
+                var tit = $('#titulo').val();
+                var aut = $('#autor').val();
+                 //alert(tit+ "  -  " + aut);
+                var data = { titulo: tit, autor: aut };
+                $.post(LinkURL, data).done(function (data) {
+                    $('#dtable').html(data);
+                }).fail(function () { });
+
+            });
+
+
+
+        }); // del ready
+
+    </script>
+
+
+
+<h2>Búsqueda de libros</h2>
+
+@using (Html.BeginForm())
+{
+    <div id="cuerpo">
+        <div style="width:30% ;display:flex;justify-content:space-between;">
+            <div id="dselector">
+                <fieldset>
+                    <legend>Título</legend>
+                    <div style="padding-bottom:10px">
+                        <input type="text" id="titulo" name="titulo" />
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Autor</legend>
+                    <div style="padding-bottom: 10px">
+                        <input type="text" id="autor" name="autor" />
+                    </div>
+                </fieldset>
+                </div>
+                <div class="form-group" style="vertical-align:central; padding-top:95px;display:none" >
+                    <div class="col-md-offset-2 col-md-10" align="left">
+                        <input type="submit" value="Ver Libros" class="btn-default btn" id="bSubmit" />
+                    </div>
+                </div>
+
+        </div>
+
+        <div id="dtable" align="center" style="border:solid; border-width:1px ;border-radius: 5px; background-color:aliceblue">
+         
+
+        </div>
+       
+    </div>
+
+}
