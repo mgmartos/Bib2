@@ -80,150 +80,160 @@
 
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-<div style="font-size:small; width:50%" align="left">
-    <div class="modal fade col-12" id="myModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div id='myModalC'>
+        <div style="font-size:small; width:80%" align="left">
+            <div class="modal fade col-12" id="myModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div id='myModalC'>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>  
-        </div>
-    </div>  
-    <fieldset>
-        <legend>@Html.DisplayNameFor(model => model.titulo)</legend>
-        <div class="borde-inferior" style="padding-bottom:5px">
-            @*@Html.EditorFor(Model => Model.idLibro, new { htmlAttributes = new { style = "width: 15%" }, })
-                @if (string.IsNullOrEmpty(@Model.titulo))
-                {
-                    @Html.LabelFor(model => model.idLibro)
-                    @Html.TextBox("",@Model.idLibro)
-                }*@
-
-            @Html.EditorFor(model => model.titulo, new { htmlAttributes = new { style = "width:100%" }, })
-            @Html.ValidationMessageFor(model => model.titulo, null, new { @class = "text-danger" })
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>@Html.DisplayNameFor(model => model.autor)</legend>
-        <div class="borde-inferior" style="padding-bottom:5px">
-            <div style="padding-bottom:5px; display:none">
-                @Html.EditorFor(model => model.CodAutor, new { htmlAttributes = new { style = "width: 10%;" }, })
-                @Html.EditorFor(model => model.autor, new { htmlAttributes = new { style = "width: 90%;" }, })
-                @Html.ValidationMessageFor(model => model.autor)
             </div>
-            <div id="DropDown">
-                @Html.DropDownList("autores")
-                @*<a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@Model.CodAutor"><i class='fas fa-plus' style='font-size:20px; padding-left:20px'></i></a>
+            <div style="display:flex;justify-content:space-between">
+                <div style="width:50%">
+                    <fieldset>
+                        <legend>@Html.DisplayNameFor(model => model.titulo)</legend>
+                        <div class="borde-inferior" style="padding-bottom:5px">
+                            @*@Html.EditorFor(Model => Model.idLibro, new { htmlAttributes = new { style = "width: 15%" }, })
+                        @if (string.IsNullOrEmpty(@Model.titulo))
+                        {
+                            @Html.LabelFor(model => model.idLibro)
+                            @Html.TextBox("",@Model.idLibro)
+                        }*@
+
+                            @Html.EditorFor(model => model.titulo, new { htmlAttributes = new { style = "width:100%" }, })
+                            @Html.ValidationMessageFor(model => model.titulo, null, new { @class = "text-danger" })
+                        </div>
+                    </fieldset>
+                </div>
+                <div>
+                    <fieldset>
+                        <legend>@Html.DisplayNameFor(model => model.autor)</legend>
+                        <div>
+                            <div style="display:none">
+                                @Html.EditorFor(model => model.CodAutor, new { htmlAttributes = new { style = "width: 10%;" }, })
+                                @Html.EditorFor(model => model.autor, new { htmlAttributes = new { style = "width: 90%;" }, })
+                                @Html.ValidationMessageFor(model => model.autor)
+                            </div>
+                            <div id="DropDown" class="borde-inferior" style="padding-bottom:5px">
+                                @Html.DropDownList("autores")
+                                @*<a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@Model.CodAutor"><i class='fas fa-plus' style='font-size:20px; padding-left:20px'></i></a>
                     <a href="@row.direccion.ToString()" target="_blank">@row.descripcion.ToString()</a>*@
 
-                @Html.ActionLink("Crear", "AltaAutor", "Home", new { htmlAttributes = new { target = "_blank" }, })
-            </div>
+                                @Html.ActionLink("Crear", "AltaAutor", "Home", new { htmlAttributes = new { target = "_blank" }, })
+                            </div>
 
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>@Html.DisplayNameFor(model => model.editorial)</legend>
-        <div class="borde-inferior" style="padding-bottom:5px">
-            @Html.EditorFor(model => model.editorial, new { htmlAttributes = new { style = "width:75%" }, })
-        </div>
-    </fieldset>
-    <div>
-        <fieldset style="padding-bottom:5px">
-            <legend>@Html.DisplayNameFor(model => model.coleccion)</legend>
-            <div class="borde-inferior" style="padding-bottom:5px;">
-                @Html.EditorFor(model => model.coleccion, new { htmlAttributes = new { style = "width:100%", maxlength = "25" }, })
-            </div>
-        </fieldset>
-    </div>
-    <div>
-        <fieldset style="padding-left:10px; ">
-            <legend>@Html.DisplayNameFor(Model => Model.fecha)</legend>
-            <div class="borde-inferior">
-                <input type="date" id="fecha" name="Fecha">
-            </div>
-        </fieldset>
-
-
-        <fieldset style="padding-left:10px">
-            <legend>@Html.DisplayNameFor(Model => Model.tema)</legend>
-            <div class="borde-inferior">
-                @Html.EditorFor(Model => Model.tema, new { htmlAttributes = new { style = "display: none" }, })
-                @Html.DropDownList("temas")
-            </div>
-        </fieldset>
-    </div>
-    <div>
-        <fieldset style="float:left;padding-left:10px">
-            <legend>@Html.DisplayNameFor(Model => Model.calificacion)</legend>
-            <div class="borde-inferior">
-                <input type="number" id="calificacion" name="calificacion" min="0" max="10" value="@Model.calificacion">
-            </div>
-        </fieldset>
-
-
-        <fieldset style="padding-left:30px">
-            <legend>@Html.DisplayNameFor(Model => Model.paginas)</legend>
-            <div class="borde-inferior">
-                <input type="number" id="paginas" name="paginas" min="50" max="2000" value="@Model.paginas">
-            </div>
-            <div class="borde-inferior">
-                @Html.EditorFor(Model => Model.origen, new { htmlAttributes = new { style = "display: none" }, })
-                <select name="SelectOrigen">
-                    <option value="MGM">MGM</option>
-                    <option value="MJCF">MJCF</option>
-                    <option value="AGC">AGC</option>
-                    <option value="JCB">JCB</option>
-                </select>
-            </div>
-        </fieldset>
-    </div>
-    <div>
-        <fieldset style="padding-left:10px">
-            <legend>@Html.DisplayNameFor(Model => Model.comentario)</legend>
-            <div class="borde-inferior">
-                @Html.EditorFor(Model => Model.comentario, new { htmlAttributes = new { style = "width:100%; text-align:left" }, })
-            </div>
-        </fieldset>
-    </div>
-
-
-    <div style="display:none">
-        @Html.EditorFor(Model => Model.prestamo)
-        @Html.EditorFor(Model => Model.fecha_prestamo)
-        @Html.EditorFor(Model => Model.numobras, new { default_value = "1" })
-        @Html.EditorFor(Model => Model.origen, new { default_value = "MGM" })
-        @Html.EditorFor(Model => Model.idLibro, new { default_value = "0" })
-
-
-    </div>
-
-
-    <div>
-        @if (ViewBag.Modificar == 0)
-        {
-            <div class="form-group">
-                <div class="col-md-10" align="left">
-                    <input type="submit" value="Crear Nuevo Libro" class="btn-primary btn" />
+                        </div>
+                    </fieldset>
                 </div>
             </div>
-        }
-        @if (ViewBag.Modificar == 1)
-        {
-            <div class="form-group">
-                <div class="col-md-10">
-                    <input type="submit" value="Modificar Libro" class="btn-primary btn" />
+            <div style="display:flex;justify-content:space-between">
+                <div style="width:50%">
+                    <fieldset>
+                        <legend>@Html.DisplayNameFor(model => model.editorial)</legend>
+                        <div class="borde-inferior" style="padding-bottom:5px">
+                            @Html.EditorFor(model => model.editorial, new { htmlAttributes = new { style = "width:75%" }, })
+                        </div>
+                    </fieldset>
+                </div>
+                <div>
+                    <fieldset>
+                        <legend>@Html.DisplayNameFor(model => model.coleccion)</legend>
+                        <div class="borde-inferior" style="padding-bottom:5px">
+                            @Html.EditorFor(model => model.coleccion, new { htmlAttributes = new { style = "width:100%", maxlength = "25" }, })
+                        </div>
+                    </fieldset>
                 </div>
             </div>
+                <div>
+                    <fieldset style="padding-left:10px; ">
+                        <legend>@Html.DisplayNameFor(Model => Model.fecha)</legend>
+                        <div class="borde-inferior">
+                            <input type="date" id="fecha" name="Fecha">
+                        </div>
+                    </fieldset>
 
-        }
-    </div>
-</div>
-    <div class="col-md-10" align="left" style="padding-top:5px">
-        <a href="javascript:void(0);" onclick="history.go(-1);">Volver</a>
-    </div>
 
-}
+                    <fieldset style="padding-left:10px">
+                        <legend>@Html.DisplayNameFor(Model => Model.tema)</legend>
+                        <div class="borde-inferior">
+                            @Html.EditorFor(Model => Model.tema, new { htmlAttributes = new { style = "display: none" }, })
+                            @Html.DropDownList("temas")
+                        </div>
+                    </fieldset>
+                </div>
+                <div>
+                    <fieldset style="float:left;padding-left:10px">
+                        <legend>@Html.DisplayNameFor(Model => Model.calificacion)</legend>
+                        <div class="borde-inferior">
+                            <input type="number" id="calificacion" name="calificacion" min="0" max="10" value="@Model.calificacion">
+                        </div>
+                    </fieldset>
+
+
+                    <fieldset style="padding-left:30px">
+                        <legend>@Html.DisplayNameFor(Model => Model.paginas)</legend>
+                        <div class="borde-inferior">
+                            <input type="number" id="paginas" name="paginas" min="50" max="2000" value="@Model.paginas">
+                        </div>
+                        <div class="borde-inferior">
+                            @Html.EditorFor(Model => Model.origen, new { htmlAttributes = new { style = "display: none" }, })
+                            <select name="SelectOrigen">
+                                <option value="MGM">MGM</option>
+                                <option value="MJCF">MJCF</option>
+                                <option value="AGC">AGC</option>
+                                <option value="JCB">JCB</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </div>
+                <div>
+                    <fieldset style="padding-left:10px">
+                        <legend>@Html.DisplayNameFor(Model => Model.comentario)</legend>
+                        <div class="borde-inferior">
+                            @Html.EditorFor(Model => Model.comentario, new { htmlAttributes = new { style = "width:100%; text-align:left" }, })
+                        </div>
+                    </fieldset>
+                </div>
+
+
+                <div style="display:none">
+                    @Html.EditorFor(Model => Model.prestamo)
+                    @Html.EditorFor(Model => Model.fecha_prestamo)
+                    @Html.EditorFor(Model => Model.numobras, new { default_value = "1" })
+                    @Html.EditorFor(Model => Model.origen, new { default_value = "MGM" })
+                    @Html.EditorFor(Model => Model.idLibro, new { default_value = "0" })
+
+
+                </div>
+
+
+                <div>
+                    @if (ViewBag.Modificar == 0)
+                    {
+                        <div class="form-group">
+                            <div class="col-md-10" align="left">
+                                <input type="submit" value="Crear Nuevo Libro" class="btn-primary btn" />
+                            </div>
+                        </div>
+                    }
+                    @if (ViewBag.Modificar == 1)
+                    {
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <input type="submit" value="Modificar Libro" class="btn-primary btn" />
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <div class="col-md-10" align="left" style="padding-top:5px">
+                <a href="javascript:void(0);" onclick="history.go(-1);">Volver</a>
+            </div>
+
+            }
 
