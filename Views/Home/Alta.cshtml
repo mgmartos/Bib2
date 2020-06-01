@@ -70,17 +70,17 @@
 {
     if (ViewBag.Modificar == 0)
     {
-        <h2>Nuevo Libro</h2>
+        <h1>Nuevo Libro</h1>
     }
     if (ViewBag.Modificar == 1)
     {
-        <h2 align="left">Modificar Libro</h2>
+        <h1>Modificar Libro</h1>
     }
 
 
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-        <div style="font-size:small; width:80%" align="left">
+        <div style="font-size:small; width:100%" align="left">
             <div class="modal fade col-12" id="myModal" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -109,7 +109,7 @@
                         </div>
                     </fieldset>
                 </div>
-                <div>
+                <div style="width:50%">
                     <fieldset>
                         <legend>@Html.DisplayNameFor(model => model.autor)</legend>
                         <div>
@@ -139,7 +139,7 @@
                         </div>
                     </fieldset>
                 </div>
-                <div>
+                <div style="width:50%">
                     <fieldset>
                         <legend>@Html.DisplayNameFor(model => model.coleccion)</legend>
                         <div class="borde-inferior" style="padding-bottom:5px">
@@ -148,56 +148,59 @@
                     </fieldset>
                 </div>
             </div>
-                <div>
+            <div style="display:flex;justify-content:space-between">
+                <div style="width:50%">
                     <fieldset style="padding-left:10px; ">
                         <legend>@Html.DisplayNameFor(Model => Model.fecha)</legend>
-                        <div class="borde-inferior">
+                        <div class="borde-inferior" style="padding-bottom:5px">
                             <input type="date" id="fecha" name="Fecha">
                         </div>
                     </fieldset>
-
-
+                </div>
+                <div style="width:50%">
                     <fieldset style="padding-left:10px">
                         <legend>@Html.DisplayNameFor(Model => Model.tema)</legend>
-                        <div class="borde-inferior">
+                        <div class="borde-inferior" style="padding-bottom:5px">
                             @Html.EditorFor(Model => Model.tema, new { htmlAttributes = new { style = "display: none" }, })
                             @Html.DropDownList("temas")
                         </div>
                     </fieldset>
+                    </div>
                 </div>
-                <div>
-                    <fieldset style="float:left;padding-left:10px">
-                        <legend>@Html.DisplayNameFor(Model => Model.calificacion)</legend>
-                        <div class="borde-inferior">
-                            <input type="number" id="calificacion" name="calificacion" min="0" max="10" value="@Model.calificacion">
-                        </div>
-                    </fieldset>
+            <div>
+                <fieldset style="float:left;padding-left:10px">
+                    <legend>@Html.DisplayNameFor(Model => Model.calificacion)</legend>
+                    <div class="borde-inferior">
+                        <input type="number" id="calificacion" name="calificacion" min="0" max="10" value="@Model.calificacion">
+                    </div>
+                </fieldset>
 
 
-                    <fieldset style="padding-left:30px">
-                        <legend>@Html.DisplayNameFor(Model => Model.paginas)</legend>
-                        <div class="borde-inferior">
-                            <input type="number" id="paginas" name="paginas" min="50" max="2000" value="@Model.paginas">
-                        </div>
-                        <div class="borde-inferior">
-                            @Html.EditorFor(Model => Model.origen, new { htmlAttributes = new { style = "display: none" }, })
-                            <select name="SelectOrigen">
-                                <option value="MGM">MGM</option>
-                                <option value="MJCF">MJCF</option>
-                                <option value="AGC">AGC</option>
-                                <option value="JCB">JCB</option>
-                            </select>
-                        </div>
-                    </fieldset>
-                </div>
-                <div>
-                    <fieldset style="padding-left:10px">
-                        <legend>@Html.DisplayNameFor(Model => Model.comentario)</legend>
-                        <div class="borde-inferior">
-                            @Html.EditorFor(Model => Model.comentario, new { htmlAttributes = new { style = "width:100%; text-align:left" }, })
-                        </div>
-                    </fieldset>
-                </div>
+                <fieldset style="padding-left:30px">
+                    <legend>@Html.DisplayNameFor(Model => Model.paginas)</legend>
+                    <div class="borde-inferior">
+                        <input type="number" id="paginas" name="paginas" min="50" max="2000" value="@Model.paginas">
+                    </div>
+                    <div class="borde-inferior">
+                        @Html.EditorFor(Model => Model.origen, new { htmlAttributes = new { style = "display: none" }, })
+                        <select name="SelectOrigen">
+                            <option value="MGM">MGM</option>
+                            <option value="MJCF">MJCF</option>
+                            <option value="AGC">AGC</option>
+                            <option value="JCB">JCB</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </div>
+            <div style="width:900px;background-color:lightgrey">
+                <fieldset style="padding-left:10px">
+                    <legend>@Html.DisplayNameFor(Model => Model.comentario)</legend>
+                    <div class="borde-inferior">
+                        @*@Html.EditorFor(Model => Model.comentario, new { htmlAttributes = new { style = "width: 500px; text-align:left; maxlength:250" }, })*@
+                        @Html.TextBoxFor(Model => Model.comentario, new { style = "width: 500px; text-align:left" })
+                    </div>
+                </fieldset>
+            </div>
 
 
                 <div style="display:none">
