@@ -18,38 +18,39 @@
     }
 
 
-    @*@Html.AntiForgeryToken()*@
-<div style="font-size:small; width:50%; padding:10px" align="left">
-    <fieldset>
-        <legend>@Html.DisplayNameFor(model => model.NombreAutor)</legend>
-        <div class="borde-inferior" style="padding-bottom:10px">
-            @Html.EditorFor(Model => Model.NombreAutor, new { htmlAttributes = new { style = "width:100%" }, })
+    @Html.AntiForgeryToken()
+    <div style="font-size:small; width:50%; padding:10px" align="left">
+            <fieldset>
+                <legend>@Html.DisplayNameFor(model => model.NombreAutor)</legend>
+                <div class="borde-inferior" style="padding-bottom:10px">
+                    @Html.EditorFor(model => model.NombreAutor, new { htmlAttributes = new { style = "width:100%" }, })
+                    @Html.ValidationMessageFor(model => model.NombreAutor, "", new { @class = "text-danger" })
+                </div>
+            </fieldset>
+            <div style="display:none">
+                @Html.EditorFor(model => model.idAutor, new { default_value = "0" })
+            </div>
+
+            <div style="padding:20px">
+                @if (ViewBag.Modificar == 0)
+                {
+                    <div class="form-group">
+                        <div class="col-md-10" align="left">
+                            <input type="submit" value="Crear Nuevo Autor" class="btn-primary btn" />
+                        </div>
+                    </div>
+                }
+                @if (ViewBag.Modificar == 1)
+                {
+                    <div class="form-group">
+                        <div class="col-md-10" align="left">
+                            <input type="submit" value="Modificar Autor" class="btn-primary btn" />
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-    </fieldset>
-    <div style="display:none">
-        @Html.EditorFor(Model => Model.idAutor, new { default_value = "0" })
-    </div>
-
-    <div style="float:right; padding:20px">
-        @if (ViewBag.Modificar == 0)
-        {
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10" align="left">
-                    <input type="submit" value="Crear Nuevo Autor" class="btn-default btn" />
-                </div>
-            </div>
-        }
-        @if (ViewBag.Modificar == 1)
-        {
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10" align="left">
-                    <input type="submit" value="Modificar Autor" class="btn-default btn" />
-                </div>
-            </div>
-        }
-    </div>
-</div>
 
 
-    }
+}
 

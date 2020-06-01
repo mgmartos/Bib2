@@ -105,21 +105,32 @@ namespace Bib2.Controllers
                                "\"fecha_prestamo\":\"" + xdatep + "\"," +
                                "\"origen\":\"" + nuevoLibro.origen + "\"," +
                                "\"CodAutor\":\"" + nuevoLibro.CodAutor + "\"}";
+            if (ModelState.IsValid)
+            {
 
-            string ret = PostWS("biblos/altalibro", "letra=" + jsonLibro);
+                string ret = PostWS("biblos/altalibro", "letra=" + jsonLibro);
+            }
+            else
+            {
+                return RedirectToAction("alta", "Home");
+            }
             //JArray jsonArray = JArray.Parse(ret);
             string letra = nuevoLibro.titulo.Substring(0, 1);
 
             //return RedirectToAction("Libros", "Home", "letra=" + letra);
-            return Redirect("Libros?letra=" + letra);
+           
+                return Redirect("Libros?letra=" + letra);
+           
         }
-
+        
         public ActionResult Alta(int codigo = 0)
         {
             var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblosauth/todos");
             string json = GetWS(request);
             JArray jsonArray = JArray.Parse(json);
             List<Autores> autores = jsonArray.ToObject<List<Autores>>();
+            Autores aa = new Autores(); aa.idAutor = 0; aa.NombreAutor = "";
+            autores.Insert(0, aa);
 
             //ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
             //             new System.Web.Mvc.SelectListItem { Selected = (a.idAutor == idAutor), Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
@@ -158,12 +169,15 @@ namespace Bib2.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AltaAutor([Bind(Include = "idAutor,NombreAutor")] Autores nuevoAutor)
         {
             string jsonAutor = "{\"idAutor\":\"" + nuevoAutor.idAutor + "\"," +
                                "\"NombreAutor\":\"" + nuevoAutor.NombreAutor + "\"}";
-
-            string ret = PostWS("biblosauth/altaAutor", "letra=" + jsonAutor);
+            if (ModelState.IsValid)
+            {
+                string ret = PostWS("biblosauth/altaAutor", "letra=" + jsonAutor);
+            }
             //JArray jsonArray = JArray.Parse(ret);
             string letra = nuevoAutor.NombreAutor.Substring(0, 1);
 

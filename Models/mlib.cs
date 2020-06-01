@@ -19,9 +19,15 @@ namespace Bib2.Models
     {
         [Display(Name = "Código")]
         public int idLibro { get; set; }
+
         [Display(Name = "Título")]
+        [Required]
+        [StringLength(50, ErrorMessage ="La longitud del título excede el máximo")]
         public string titulo { get; set; }
         [Display(Name = "Autor")]
+        [Required]
+        [StringLength(50, ErrorMessage = "La longitud del nombre del autor excede el máximo")]
+        [MaxLength(50)]
         public string autor { get; set; }
         [Display(Name = "Editorial")]
         public string editorial { get; set; }
@@ -35,6 +41,7 @@ namespace Bib2.Models
         [Display(Name = "Páginas")]
         public Nullable<int> paginas { get; set; }
         [Display(Name = "Opinión")]
+        [StringLength(255, ErrorMessage = "La longitud del comentario excede el máximo")]
         public string comentario { get; set; }
         public string prestamo { get; set; }
         public Nullable<System.DateTime> fecha_prestamo { get; set; }

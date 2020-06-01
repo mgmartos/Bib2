@@ -212,6 +212,7 @@
     <Content Include="Views\Home\LibrosP.cshtml" />
     <Content Include="Views\Home\buscarlibros.cshtml" />
     <Content Include="Views\Home\_buscarlibros.cshtml" />
+    <Content Include="Views\Home\AltaAutor2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

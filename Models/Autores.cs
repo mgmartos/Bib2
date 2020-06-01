@@ -6,7 +6,7 @@
 //     Los cambios manuales en este archivo se sobrescribirán si se regenera el código.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ComponentModel.DataAnnotations;
 namespace Bib2.Models
 {
     using System;
@@ -15,6 +15,10 @@ namespace Bib2.Models
     public partial class Autores
     {
         public int idAutor { get; set; }
+
+        [Display(Name = "Nombre")]
+        [Required]
+        [StringLength(50, ErrorMessage = "La longitud del nombre del autor excede el máximo")]
         public string NombreAutor { get; set; }
     }
 }

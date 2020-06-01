@@ -10,8 +10,10 @@ namespace Bib2.Models
     public partial class Lecturas
     {
 		[Display(Name = "Título")]
+        [MaxLength(50)]
         public string titulo { get; set; }
 		[Display(Name = "Autor")]
+        [MaxLength(50)]
         public string autor { get; set; }
         public int CodAutor { get; set; } 
 		[Display(Name = "Leído")]
