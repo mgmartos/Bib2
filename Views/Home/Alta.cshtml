@@ -118,7 +118,7 @@
                                 @Html.EditorFor(model => model.autor, new { htmlAttributes = new { style = "width: 90%;" }, })
                                 @Html.ValidationMessageFor(model => model.autor)
                             </div>
-                            <div id="DropDown" class="borde-inferior" style="padding-bottom:5px">
+                            <div id="DropDown" class="borde-inferior" style="padding-bottom:5px; width:100px">
                                 @Html.DropDownList("autores")
                                 @*<a href="javascript:void(0);" class="linkDetail" id="ur" data-id="@Model.CodAutor"><i class='fas fa-plus' style='font-size:20px; padding-left:20px'></i></a>
                     <a href="@row.direccion.ToString()" target="_blank">@row.descripcion.ToString()</a>*@
@@ -135,7 +135,7 @@
                     <fieldset>
                         <legend>@Html.DisplayNameFor(model => model.editorial)</legend>
                         <div class="borde-inferior" style="padding-bottom:5px">
-                            @Html.EditorFor(model => model.editorial, new { htmlAttributes = new { style = "width:75%" }, })
+                            @Html.EditorFor(model => model.editorial, new { htmlAttributes = new { style = "width:65%" }, })
                         </div>
                     </fieldset>
                 </div>
@@ -143,7 +143,7 @@
                     <fieldset>
                         <legend>@Html.DisplayNameFor(model => model.coleccion)</legend>
                         <div class="borde-inferior" style="padding-bottom:5px">
-                            @Html.EditorFor(model => model.coleccion, new { htmlAttributes = new { style = "width:100%", maxlength = "25" }, })
+                            @Html.EditorFor(model => model.coleccion, new { htmlAttributes = new { style = "width:70%", maxlength = "25" }, })
                         </div>
                     </fieldset>
                 </div>
@@ -192,7 +192,7 @@
                     </div>
                 </fieldset>
             </div>
-            <div style="width:900px;background-color:lightgrey">
+            <div style="width:100%">
                 <fieldset style="padding-left:10px">
                     <legend>@Html.DisplayNameFor(Model => Model.comentario)</legend>
                     <div class="borde-inferior">
