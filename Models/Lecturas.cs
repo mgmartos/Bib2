@@ -24,5 +24,8 @@ namespace Bib2.Models
         public string comentario { get; set; }
 		[Display(Name = "EBook")]
         public bool Ebook { get; set; }
+
+        [Display(Name = "Comenzado")] 
+        public Nullable<System.DateTime> fecha_Inicio { get; set; }
     }
 }

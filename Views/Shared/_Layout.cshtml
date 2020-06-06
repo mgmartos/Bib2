@@ -56,7 +56,6 @@
 
             li {
                 font-size: 1.0em;
-            
             }
 
             th, td, a {
@@ -81,7 +80,7 @@
                 @Html.ActionLink("Biblos 2020 ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"">
+                <ul class="nav navbar-nav" style="color:crimson">
                     <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                     <li>@Html.ActionLink("Autores", "autores", "Home")</li>
                     <li>@Html.ActionLink("Libros", "LibrosP", "Home")</li>
@@ -103,7 +102,7 @@
 
             @RenderBody()
             <hr />
-            <footer style="padding-left:5%">
+            <footer style="padding-left: 5%">
                 <p>&copy; @DateTime.Now.Year - Biblos MGM</p>
             </footer>
 

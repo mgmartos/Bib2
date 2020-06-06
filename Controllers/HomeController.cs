@@ -193,38 +193,51 @@ namespace Bib2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AltaLectura([Bind(Include = "titulo,autor,CodAutor,fecha,calificacion,comentario,Ebook")] Lecturas nuevaLectura)
+        public ActionResult AltaLectura([Bind(Include = "titulo,autor,CodAutor,fecha_Inicio,fecha,calificacion,comentario,Ebook")] Lecturas nuevaLectura)
         {
-            string xdate = "";
+            string xdate = ""; string xdateI = "";
             if (nuevaLectura.fecha.HasValue)
             {
-                xdate = ((DateTime)nuevaLectura.fecha).ToString("u");     // "2020-03-22 23:59:59"; 
+                xdate = ((DateTime)nuevaLectura.fecha).ToString("u");     // "2020-03-22 23:59:59";                 
+                xdateI = ((DateTime)nuevaLectura.fecha_Inicio).ToString("u");     // "2020-03-22 23:59:59"; 
             }
             string jsonLibro = "{\"titulo\":\"" + nuevaLectura.titulo + "\"," +
-                               "\"autor\":\"" + nuevaLectura.autor + "\"," +
+                               "\"autor\":\"" + nuevaLectura.autor.Trim() + "\"," +
                                "\"CodAutor\":\"" + nuevaLectura.CodAutor + "\"," +
+                              "\"fecha_Inicio\":\"" + xdateI + "\"," +
                               "\"fecha\":\"" + xdate + "\"," +
                                "\"calificacion\":\"" + nuevaLectura.calificacion + "\"," +
-                               "\"comentario\":\"" + nuevaLectura.comentario + "\"," +
+                               "\"comentario\":\"" + nuevaLectura.comentario.Trim() + "\"," +
             //"\"EBook\":\" \"}";
                                 "\"EBook\":\"" + nuevaLectura.Ebook + "\"}";
 
             string ret = PostWS("Lecturas/altalectura", "letra=" + jsonLibro);
             string letra = nuevaLectura.titulo.Substring(0, 1);
-            return Redirect("AltaLectura");
+            return Redirect("ListaLecturas2");
         }
-        public ActionResult AltaLectura()
+
+        public ActionResult AltaLectura(string tit="")
         {
             ViewBag.Modificar = 0;
             var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblosauth/todos");
             string json = GetWS(request);
-            JArray jsonArray = JArray.Parse(json);
-            List<Autores> autores = jsonArray.ToObject<List<Autores>>();
+            JArray jsonArr = JArray.Parse(json);
+            List<Autores> autores = jsonArr.ToObject<List<Autores>>();
             ViewBag.autores = autores.OrderBy(a => a.NombreAutor).Select(a =>
                  new System.Web.Mvc.SelectListItem { /*Selected = (a.idAutor == libro.CodAutor),*/ Value = a.idAutor.ToString(), Text = a.NombreAutor.ToString() });
 
-
+            if (string.IsNullOrEmpty(tit))
+            {     
             return View(new Bib2.Models.Lecturas());
+            }
+            else
+            {
+            string lec = PostWS("lecturas/Getlectura", "letra=" + tit.ToString());
+            JObject js = JObject.Parse(lec);
+            Lecturas lectura = js.ToObject<Lecturas>();
+
+            return View(lectura);
+            }
         }
 
         [HttpGet]
