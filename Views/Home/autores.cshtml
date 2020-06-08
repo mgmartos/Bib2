@@ -138,10 +138,12 @@
                 }
             </table>
         </div>
+        <div style="padding-left:5%">
+            <p>
+                @Html.ActionLink("Volver", "index")
+            </p>
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Volver", "index")
-    </p>
     @if (@Model.Count() > 30)
     {
         <div align="right">

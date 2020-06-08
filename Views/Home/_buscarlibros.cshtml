@@ -31,21 +31,22 @@ $(document).ready(function () {
             <tr>
                 <th style="width:5.00%">Código</th>
                 <th style="width:50.00%">Título</th>
-                <th style="width:25.00%">Autor</th>
+                <th style="width:20.00%">Autor</th>
                 <th style="width:15.00%">Tema</th>
-
                 <th style="width:5.00%">Pág.</th>
+                <th style="width:5.00%"></th>
             </tr>
             @foreach (Bib2.Models.mlib libro in @Model)
             {
-                <tr>
-                    <td>@Html.DisplayFor(Model => libro.idLibro)</td>
-                    <td>@Html.DisplayFor(Model => libro.titulo)</td>
-                    <td>@Html.DisplayFor(Model => libro.autor)</td>
-                    <td>@Html.DisplayFor(Model => libro.tema)</td>
-                    <td>@Html.DisplayFor(Model => libro.paginas)</td>
+        <tr>
+            <td>@Html.DisplayFor(Model => libro.idLibro)</td>
+            <td>@Html.DisplayFor(Model => libro.titulo)</td>
+            <td>@Html.DisplayFor(Model => libro.autor)</td>
+            <td>@Html.DisplayFor(Model => libro.tema)</td>
+            <td>@Html.DisplayFor(Model => libro.paginas)</td>
+            <td>@Html.ActionLink("Editar", "Alta", new { codigo = libro.idLibro })</td>
 
-                </tr>
+        </tr>
             }
         </table>
     </div>

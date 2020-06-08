@@ -17,7 +17,8 @@ table, td {
     border-collapse: collapse;
     font: normal,18px,arial;
     font-size:smaller; 
-    padding-left: 10px }
+    padding-left: 10px;
+}
 
     .horizontal {
     float: left;

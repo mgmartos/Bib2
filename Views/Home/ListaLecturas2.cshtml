@@ -20,20 +20,20 @@
             </tr>
             @foreach (Bib2.Models.Lecturas lectura in Model.List)
             {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => lectura.titulo)</td>
-            <td>@Html.DisplayFor(modelItem => lectura.autor)</td>
-            <td>
-                @Convert.ToDateTime(lectura.fecha_Inicio).ToString("dd/MM/yyyy")
-            </td>
-            <td>
-                @*@Html.DisplayFor(modelItem => lectura.fecha)*@
-                @Convert.ToDateTime(lectura.fecha).ToString("dd/MM/yyyy")
-            </td>
-            <td>@Html.DisplayFor(modelItem => lectura.comentario)</td>
-            <td>@Html.DisplayFor(modelItem => lectura.Ebook)</td>
-            <td>@Html.ActionLink("Editar", "AltaLectura", new { tit = lectura.titulo.Trim()})</td>
-        </tr>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => lectura.titulo)</td>
+                    <td>@Html.DisplayFor(modelItem => lectura.autor)</td>
+                    <td>
+                        @Convert.ToDateTime(lectura.fecha_Inicio).ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => lectura.fecha)*@
+                        @Convert.ToDateTime(lectura.fecha).ToString("dd/MM/yyyy")
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => lectura.comentario)</td>
+                    <td>@Html.DisplayFor(modelItem => lectura.Ebook)</td>
+                    <td>@Html.ActionLink("Editar", "AltaLectura", new { tit = lectura.titulo.Trim() })</td>
+                </tr>
             }
         </table>
         <div>
@@ -43,7 +43,9 @@
             @Html.Raw(Model.Pagi_navegacion)
         </div>
     </div>
-    <p>
-        @Html.ActionLink("Volver", "index")
-    </p>
-</div>
+    <div style="padding-left:5%">
+        <p>
+            @Html.ActionLink("Volver", "index")
+        </p>
+    </div>
+    </div>
