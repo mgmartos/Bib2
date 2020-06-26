@@ -54,7 +54,7 @@
                 <legend>@Html.DisplayNameFor(Model => Model.fecha_Inicio)</legend>
                 <div class="form-group">
                     <div class="col-md-10 borde-inferior">
-                        <input type="date" id="fecha_Inicio" name="Fecha_Inicio" value=@Convert.ToDateTime(Model.fecha_Inicio).ToString("yyyy-MM-dd")  class="form-control">
+                        <input type="date" id="fecha_Inicio" name="Fecha_Inicio" value=@Convert.ToDateTime(Model.fecha_Inicio).ToString("yyyy-MM-dd") class="form-control">
                         @Html.ValidationMessageFor(model => model.fecha_Inicio, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -65,62 +65,76 @@
                 <legend>@Html.DisplayNameFor(Model => Model.fecha)</legend>
                 <div class="form-group">
                     <div class="col-md-10 borde-inferior">
-                        <input type="date" id="fecha" name="Fecha" value=@Convert.ToDateTime(Model.fecha).ToString("yyyy-MM-dd")  class="form-control">
+                        <input type="date" id="fecha" name="Fecha" value=@Convert.ToDateTime(Model.fecha).ToString("yyyy-MM-dd") class="form-control">
                         @Html.ValidationMessageFor(model => model.fecha, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </fieldset>
         </div>
     </div>
-    <fieldset style="padding-left:10px">
-        <legend>@Html.DisplayNameFor(Model => Model.calificacion)</legend>
-        <div class="form-group">
-            <div class="col-md-10 borde-inferior">
-                <input type="number" id="calificacion" name="calificacion" min="0" max="10" value="@Model.calificacion" class="form-control">
-                @Html.ValidationMessageFor(model => model.calificacion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </fieldset>
-
-    <fieldset style="padding-left:10px">
-        <legend>@Html.DisplayNameFor(Model => Model.comentario)</legend>
-        <div class="form-group">
-            <div class="borde-inferior" style="padding-left:10px; width:90%">
-                @*<input type="text" id="comentario" name="comentario" value="" class="form-control" style="width:100%" />*@
-                @Html.EditorFor(Model => Model.comentario, new { htmlAttributes = new { style = "width:100%" }, })
-                @Html.ValidationMessageFor(model => model.comentario, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </fieldset>
-
-
-    <fieldset style="padding-left:10px">
-        <legend>@Html.DisplayNameFor(Model => Model.Ebook)</legend>
-        <div class="form-group">
-            <div class="col-md-10 borde-inferior" style="padding-left:40px">
-                <div class="checkbox">
-                    @*<input type="checkbox" id="EBook" name="EBook" style = "width:40px; height:40px" />*@
-                    @Html.EditorFor(model => model.Ebook, new { htmlAttributes = new { style = " width: 40px; height: 40px; " } })
-                    @Html.ValidationMessageFor(model => model.Ebook, "", new { @class = "text-danger" })
+    <div  style="display:flex;justify-content:space-between; width:60%;">
+        <div style="width:40%">
+            <fieldset style="padding-left:10px">
+                <legend>@Html.DisplayNameFor(Model => Model.calificacion)</legend>
+                <div class="form-group">
+                    <div class="col-md-3 borde-inferior">
+                        <input type="number" id="calificacion" name="calificacion" min="0" max="10" value="@Model.calificacion" class="form-control" style="max-width:200px">
+                        @Html.ValidationMessageFor(model => model.calificacion, "", new { @class = "text-danger" })
+                    </div>
                 </div>
+            </fieldset>
             </div>
-        </div>
-    </fieldset>
+            <div style="width:40%">
+                <fieldset style="padding-left:10px">
+                    <legend>@Html.DisplayNameFor(Model => Model.paginas)</legend>
+                    <div class="form-group">
+                        <div class="col-md-3 borde-inferior">
+                            <input type="number" id="paginas" name="paginas" min="0" max="1999" value="@Model.paginas" class="form-control" style="max-width:200px">
+                            @Html.ValidationMessageFor(model => model.paginas, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            </div>
+            <fieldset style="padding-left:10px">
+                <legend>@Html.DisplayNameFor(Model => Model.comentario)</legend>
+                <div class="form-group">
+                    <div class="borde-inferior" style="padding-left:10px; width:90%">
+                        @*<input type="text" id="comentario" name="comentario" value="" class="form-control" style="width:100%" />*@
+                        @Html.EditorFor(Model => Model.comentario, new { htmlAttributes = new { style = "width:100%" }, })
+                        @Html.ValidationMessageFor(model => model.comentario, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </fieldset>
 
 
-    @*<div class="col-md-10">
+            <fieldset style="padding-left:10px">
+                <legend>@Html.DisplayNameFor(Model => Model.Ebook)</legend>
+                <div class="form-group">
+                    <div class="col-md-10 borde-inferior" style="padding-left:40px">
+                        <div class="checkbox">
+                            @*<input type="checkbox" id="EBook" name="EBook" style = "width:40px; height:40px" />*@
+                            @Html.EditorFor(model => model.Ebook, new { htmlAttributes = new { style = " width: 40px; height: 40px; " } })
+                            @Html.ValidationMessageFor(model => model.Ebook, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+
+            @*<div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.Ebook)
                 @Html.ValidationMessageFor(model => model.Ebook, "", new { @class = "text-danger" })
             </div>
         </div>*@
 
-    <div class="form-group" style="padding:20px">
-        <div class="col-md-10">
-            <input type="submit" value="Crear Nueva Lectura" class="btn btn-primary" />
+            <div class="form-group" style="padding:20px">
+                <div class="col-md-10">
+                    <input type="submit" value="Crear Nueva Lectura" class="btn btn-primary" />
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     }
 
     <div>

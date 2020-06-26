@@ -27,5 +27,7 @@ namespace Bib2.Models
 
         [Display(Name = "Comenzado")] 
         public Nullable<System.DateTime> fecha_Inicio { get; set; }
+        [Display(Name = "Pags.")]
+        public Nullable<int> paginas { get; set; }
     }
 }

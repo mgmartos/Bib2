@@ -193,7 +193,7 @@ namespace Bib2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AltaLectura([Bind(Include = "titulo,autor,CodAutor,fecha_Inicio,fecha,calificacion,comentario,Ebook")] Lecturas nuevaLectura)
+        public ActionResult AltaLectura([Bind(Include = "titulo,autor,CodAutor,fecha_Inicio,fecha,paginas,calificacion,comentario,Ebook")] Lecturas nuevaLectura)
         {
             string xdate = ""; string xdateI = "";
             if (nuevaLectura.fecha.HasValue)
@@ -201,11 +201,17 @@ namespace Bib2.Controllers
                 xdate = ((DateTime)nuevaLectura.fecha).ToString("u");     // "2020-03-22 23:59:59";                 
                 xdateI = ((DateTime)nuevaLectura.fecha_Inicio).ToString("u");     // "2020-03-22 23:59:59"; 
             }
+            if (nuevaLectura.calificacion == null)
+                nuevaLectura.calificacion = 0;
+            if (string.IsNullOrEmpty(nuevaLectura.comentario))
+                nuevaLectura.comentario = "";
+
             string jsonLibro = "{\"titulo\":\"" + nuevaLectura.titulo + "\"," +
                                "\"autor\":\"" + nuevaLectura.autor.Trim() + "\"," +
                                "\"CodAutor\":\"" + nuevaLectura.CodAutor + "\"," +
                               "\"fecha_Inicio\":\"" + xdateI + "\"," +
                               "\"fecha\":\"" + xdate + "\"," +
+                               "\"paginas\":\"" + nuevaLectura.paginas + "\"," +
                                "\"calificacion\":\"" + nuevaLectura.calificacion + "\"," +
                                "\"comentario\":\"" + nuevaLectura.comentario.Trim() + "\"," +
             //"\"EBook\":\" \"}";

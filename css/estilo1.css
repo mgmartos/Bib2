@@ -198,3 +198,10 @@ a.mailto {
     opacity: .8;
 }
 
+.navbar-inverse .navbar-nav > li > a {
+     color: darkred;
+     /*color: black;*/
+     font-weight: bold;
+    font-size: 15px;
+}
+
