@@ -1,16 +1,18 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color:whitesmoke;
+    background-color: whitesmoke;
+    background-color: floralwhite;
+
 }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 /* Carousel */

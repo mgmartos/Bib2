@@ -101,7 +101,7 @@
                 <div class="form-group">
                     <div class="borde-inferior" style="padding-left:10px; width:90%">
                         @*<input type="text" id="comentario" name="comentario" value="" class="form-control" style="width:100%" />*@
-                        @Html.EditorFor(Model => Model.comentario, new { htmlAttributes = new { style = "width:100%" }, })
+                        @Html.EditorFor(Model => Model.comentario, new { htmlAttributes = new { style = "width:100%" , maxlength = "255" }, })
                         @Html.ValidationMessageFor(model => model.comentario, "", new { @class = "text-danger" })
                     </div>
                 </div>

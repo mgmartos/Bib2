@@ -4,38 +4,47 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*@model List<Bib2.Models.Lecturas>*@
+<style>
+        th, td, a {
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+    </style>
+
+
+
 <h2>Lista de Lecturas</h2>
-<div id="Principal" style="">
+<div id="Principal" style="width: 100%">
     <div id="ListaLecturas" align="center">
-        <table id="tLecturas" style="width:90%; border:thin" align="center">
+        <table id="tLecturas" style="width: 100%; border: thin" align="center">
             <tr>
-                <th style="width:25.00%">@Html.DisplayNameFor(model => model.Input.titulo)</th>
-                <th style="width:20.00%">@Html.DisplayNameFor(model => model.Input.autor)</th>
-                <th style="width:10.00%">@Html.DisplayNameFor(model => model.Input.fecha_Inicio)</th>
-                <th style="width:10.00%">@Html.DisplayNameFor(model => model.Input.fecha)</th>
-                <th style="width:10.00%">@Html.DisplayNameFor(model => model.Input.paginas)</th>
-                <th style="width:30.00%">@Html.DisplayNameFor(model => model.Input.comentario)</th>
+                <th style="width: 20.00%">@Html.DisplayNameFor(model => model.Input.titulo)</th>
+                <th style="width:15.00%">@Html.DisplayNameFor(model => model.Input.autor)</th>
+                <th style="width:07.00%">@Html.DisplayNameFor(model => model.Input.fecha_Inicio)</th>
+                <th style="width:07.00%">@Html.DisplayNameFor(model => model.Input.fecha)</th>
+                <th style="width:5.00%">@Html.DisplayNameFor(model => model.Input.paginas)</th>
+                <th style="width:36.00%">@Html.DisplayNameFor(model => model.Input.comentario)</th>
                 <th style="width:05.00%">@Html.DisplayNameFor(model => model.Input.Ebook)</th>
                 <th style="width:05.00%"></th>
 
             </tr>
             @foreach (Bib2.Models.Lecturas lectura in Model.List)
             {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => lectura.titulo)</td>
-            <td>@Html.DisplayFor(modelItem => lectura.autor)</td>
-            <td>
-                @Convert.ToDateTime(lectura.fecha_Inicio).ToString("dd/MM/yyyy")
-            </td>
-            <td>
-                @*@Html.DisplayFor(modelItem => lectura.fecha)*@
-                @Convert.ToDateTime(lectura.fecha).ToString("dd/MM/yyyy")
-            </td>
-            <td>@Html.DisplayFor(modelItem => lectura.paginas)</td>
-            <td>@Html.DisplayFor(modelItem => lectura.comentario)</td>
-            <td>@Html.DisplayFor(modelItem => lectura.Ebook)</td>
-            <td>@Html.ActionLink("Editar", "AltaLectura", new { tit = lectura.titulo.Trim() })</td>
-        </tr>
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => lectura.titulo)</td>
+                    <td>@Html.DisplayFor(modelItem => lectura.autor)</td>
+                    <td>
+                        @Convert.ToDateTime(lectura.fecha_Inicio).ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => lectura.fecha)*@
+                        @Convert.ToDateTime(lectura.fecha).ToString("dd/MM/yyyy")
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => lectura.paginas)</td>
+                    <td>@Html.DisplayFor(modelItem => lectura.comentario)</td>
+                    <td>@Html.DisplayFor(modelItem => lectura.Ebook)</td>
+                    <td>@Html.ActionLink("Editar", "AltaLectura", new { tit = lectura.titulo.Trim() })</td>
+                </tr>
             }
         </table>
         <div>
@@ -50,4 +59,4 @@
             @Html.ActionLink("Volver", "index")
         </p>
     </div>
-    </div>
+</div>
