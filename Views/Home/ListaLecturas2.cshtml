@@ -4,32 +4,85 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*@model List<Bib2.Models.Lecturas>*@
+
+<script>
+    var LinkURL = '/Home/_Comentario';
+    $(function () {
+        $(".linkDetail").click(function () {
+            var $buttonClicked = $(this);
+            var titulcio = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: LinkURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "titulo": titulcio},
+                datatype: "json",
+                success: function (data) {
+                    // debugger;
+                    $('#myModalC').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Fallo en la carga del contenido.");
+                }
+            });
+        });
+        $("#closbtn").click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+</script>
+
 <style>
-        th, td, a {
+    /*th, td {
             font-size: 0.8em;
             font-weight: bold;
         }
+    a:link {
+        color: black;
+
+    }*/
     </style>
 
 
-
 <h2>Lista de Lecturas</h2>
-<div id="Principal" style="width: 100%">
+<div id="Principal" class="row">
+    <h1>Historial de lecturas</h1>
+    <div class="modal fade col-12" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content ">
+                    <div id='myModalC'>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+    </div>
     <div id="ListaLecturas" align="center">
         <table id="tLecturas" style="width: 100%; border: thin" align="center">
             <tr>
-                <th style="width: 20.00%">@Html.DisplayNameFor(model => model.Input.titulo)</th>
-                <th style="width:15.00%">@Html.DisplayNameFor(model => model.Input.autor)</th>
+                <th style="width: 31.00%">@Html.DisplayNameFor(model => model.Input.titulo)</th>
+                <th style="width:20.00%">@Html.DisplayNameFor(model => model.Input.autor)</th>
                 <th style="width:07.00%">@Html.DisplayNameFor(model => model.Input.fecha_Inicio)</th>
                 <th style="width:07.00%">@Html.DisplayNameFor(model => model.Input.fecha)</th>
                 <th style="width:5.00%">@Html.DisplayNameFor(model => model.Input.paginas)</th>
-                <th style="width:36.00%">@Html.DisplayNameFor(model => model.Input.comentario)</th>
+                <th style="width:20.00%">@Html.DisplayNameFor(model => model.Input.comentario)</th>
                 <th style="width:05.00%">@Html.DisplayNameFor(model => model.Input.Ebook)</th>
                 <th style="width:05.00%"></th>
 
             </tr>
             @foreach (Bib2.Models.Lecturas lectura in Model.List)
             {
+
+                var shortDescript = String.Concat(lectura.comentario.Trim().Take(25)) + "...";
+                if (shortDescript.Length == 3) 
+                { shortDescript = ""; }                
+
+             
                 <tr>
                     <td>@Html.DisplayFor(modelItem => lectura.titulo)</td>
                     <td>@Html.DisplayFor(modelItem => lectura.autor)</td>
@@ -41,7 +94,7 @@
                         @Convert.ToDateTime(lectura.fecha).ToString("dd/MM/yyyy")
                     </td>
                     <td>@Html.DisplayFor(modelItem => lectura.paginas)</td>
-                    <td>@Html.DisplayFor(modelItem => lectura.comentario)</td>
+                    <td><a href="javascript:void(0);" class="linkDetail" id="ver" data-id="@lectura.titulo"/>@Html.DisplayFor(modelItem => shortDescript)</td>
                     <td>@Html.DisplayFor(modelItem => lectura.Ebook)</td>
                     <td>@Html.ActionLink("Editar", "AltaLectura", new { tit = lectura.titulo.Trim() })</td>
                 </tr>

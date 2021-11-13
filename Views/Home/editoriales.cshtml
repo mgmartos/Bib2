@@ -9,26 +9,6 @@
             $('#editorial').val($(this).find("option:selected").text());
             var LinkURL = '/Home/_LibrosEditorial';
             var ed = $('#editorial').val();
-            //$.ajax({
-            //    type: "POST",
-            //    url: LinkURL,
-            //    contentType: "application/json; charset=utf-8",
-            //    data: { 'editorial': ed },
-            //    datatype: "json",
-            //    success: function (data) {
-            //        //   debugger;
-            //        $('#dtable').html(data);
-            //    },
-            //    error: function () {
-            //        alert("Fallo en la carga del contenido dinámico.");
-            //    }
-            //});
-
-            //$.post('/Home/editoriales', { 'editorial': ed },
-            //    function (data, status) {
-            //        alert("Data: " + data + "\nStatus: " + status);
-            //        $('#dtable').html(data);
-            //    });
             var data = { editorial: ed };
             $.post(LinkURL, data).done(function (data) {
                 $('#dtable').html(data);
@@ -37,69 +17,31 @@
         });
 
 
-
-
-
-           $(function () {
-            $("table td").hover(
-                function () {
-                    $("td", $(this).closest("tr")).addClass("hover_row");
-                },
-                function () {
-                    $("td", $(this).closest("tr")).removeClass("hover_row");
-                }
-            );
-
-        });
-
-    //         En todas las tablas pone las filas pares con un color de fondo y las impares con otro
-    $('table').find('tr:even').css({'background-color': '#f5f5f5' })
-            .end().find('tr:odd').css({ 'background-color': '#add8e6' });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }); // del ready
 
 </script>
 @using (Html.BeginForm())
 {
-
-    <div id="cuerpo">
-        <div style="width:100%">
-            <div id="dselector">
-                <fieldset>
-                    <legend>Editoriales</legend>
-                    <div style="padding-bottom:10px;display:none">
-                        <input type="text" id="editorial" name="editorial" />
+    <div class="row" id="cuerpo">    
+        <h1>Búsqueda de libros por editorial</h1>
+        <div id="dselector">
+            <fieldset>
+                <legend>Editoriales</legend>
+                <div style="padding-bottom:10px;display:none">
+                    <input type="text" id="editorial" name="editorial" />
+                </div>
+                <div class="borde-inferior" style="padding-bottom:10px">
+                    @Html.DropDownList("editoriales")
+                </div>
+                <div class="form-group" style="display:none">
+                    <div class="col-md-offset-2 col-md-10" align="left">
+                        <input type="submit" value="Ver Libros" class="btn-default btn" id="bSubmit" />
                     </div>
-                    <div class="borde-inferior" style="padding-bottom:10px">
-                        @Html.DropDownList("editoriales")
-                    </div>
-                    <div class="form-group" style="display:none">
-                        <div class="col-md-offset-2 col-md-10" align="left">
-                            <input type="submit" value="Ver Libros" class="btn-default btn" id="bSubmit" />
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-
-            <div id="dtable" align="center">
-
-            </div>
+                </div>
+            </fieldset>
         </div>
+        <div id="dtable" align="center">
+        </div>
+       
     </div>
 }

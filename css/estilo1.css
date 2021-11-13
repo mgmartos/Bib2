@@ -1,6 +1,9 @@
 ﻿
 
-h1 {color:darkblue;}
+h1 {
+    color: darkred;
+    font-family: "Times New Roman", Times, serif;
+}
 h2 {
     color:crimson;
     background-color:transparent;
@@ -62,7 +65,13 @@ select {
     text-align: left;
 }
 
-
+.blockcomentario {
+    margin: 10px;
+    border: solid;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    border-width: 1px;
+}
 .textogrande {
     background-color: transparent;
     font-family: "Times New Roman", Times, serif;
@@ -76,6 +85,7 @@ select {
 .row {
     width: 100%;
     margin: 0 auto;
+    margin-top:35px;
 }
 
 .block1 {
@@ -97,6 +107,7 @@ select {
     margin-right: 6px;
     color:aqua;
 }
+
 
 .cabeceraBaja {
     font-family: "Open Sans",sans-serif;
@@ -198,9 +209,9 @@ a.mailto {
 }
 
 .navbar-inverse .navbar-nav > li > a {
-     color: darkred;
-     /*color: black;*/
+    color:darkblue;
+     /*color: darkred;
+     color: black;*/
      font-weight: bold;
     font-size: 15px;
 }
-

@@ -9,11 +9,11 @@
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="~/css/site.css" />
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
     <link rel="stylesheet" href="~/css/estilo1.css" />
     <link rel="stylesheet" href="~/css/S_Tablas.css" />
     <script type="text/javascript" src="~/scripts/ToolsJquery.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"/>
 
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
     <style>
@@ -30,6 +30,12 @@
             font-weight: bold;
         }
 
+        @@media screen and (max-width: 767px) {
+            /* Hide captions */
+            .carousel-caption {
+                display: none;
+            }
+        }
         /* fin de zona común a todas las resoluciones */
         @@media screen and (min-width:768px) {
             body {
@@ -66,11 +72,11 @@
         }
 
         /*.navbar-inverse .navbar-nav > li > a {
-     color: darkred;
-     color: black;
-     font-weight: bold;
-    font-size: 15px;
-}*/
+             color: darkred;
+             color: black;
+             font-weight: bold;
+            font-size: 15px;
+        }*/
     </style>
 
 
@@ -90,7 +96,7 @@
                 <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                         <li>@Html.ActionLink("Autores", "autores", "Home")</li>
-                        <li>@Html.ActionLink("Libros", "LibrosP", "Home")</listyle="color:crimson">
+                        <li>@Html.ActionLink("Libros", "LibrosP", "Home")</li>
                         <li>@Html.ActionLink("Buscar Libros", "buscarlibros", "Home")</li>
                         <li>@Html.ActionLink("Lecturas", "ListaLecturas2", "Home")</li>
                         <li>@Html.ActionLink("Editoriales", "editoriales", "Home")</li>
@@ -102,7 +108,7 @@
 
 
                     </ul>
-</div>
+            </div>
         </div>
     </div>
    <div class="container body-content">

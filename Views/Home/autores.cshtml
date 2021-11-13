@@ -67,7 +67,11 @@
 
 
 </script>
-
+<style>
+    #Inicial{
+        color:darkred;
+    }
+</style>
 <h2>Autores</h2>
 <div id="Principal" style="">
     <div class="modal fade col-12" id="myModal" role="dialog">
@@ -90,7 +94,7 @@
                     @{
                         for (char c = 'A'; c <= 'Z'; c++)
                         {
-                            <li class="horizontal">
+                            <li class="horizontal" style="color:darkred;">
                                 <a>
                                     @Html.ActionLink(c.ToString(), "Autores", new { letra = c })
                                 </a>
@@ -100,6 +104,8 @@
                 </ul>
             </fieldset>
         </div>
+        <div style="width:100%; padding-bottom:1em" align="center"><i class='fas fa-user-circle fa-border fa-5x'></i><br /></div>
+
         <div id="ListaAutores" align="center">
             <table id="tAutores" style="width:50%; border:thin" align="center">
                 <tr>

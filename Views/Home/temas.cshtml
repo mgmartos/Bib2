@@ -17,21 +17,21 @@
 
         });
 
-        $(function () {
-            $("table td").hover(
-                function () {
-                    $("td", $(this).closest("tr")).addClass("hover_row");
-                },
-                function () {
-                    $("td", $(this).closest("tr")).removeClass("hover_row");
-                }
-            );
+    //    $(function () {
+    //        $("table td").hover(
+    //            function () {
+    //                $("td", $(this).closest("tr")).addClass("hover_row");
+    //            },
+    //            function () {
+    //                $("td", $(this).closest("tr")).removeClass("hover_row");
+    //            }
+    //        );
 
-        });
+    //    });
 
-    //         En todas las tablas pone las filas pares con un color de fondo y las impares con otro
-    $('table').find('tr:even').css({'background-color': '#f5f5f5' })
-            .end().find('tr:odd').css({ 'background-color': '#add8e6' });
+    ////         En todas las tablas pone las filas pares con un color de fondo y las impares con otro
+    //$('table').find('tr:even').css({'background-color': '#f5f5f5' })
+    //        .end().find('tr:odd').css({ 'background-color': '#add8e6' });
 
 
     }); // del ready
@@ -40,28 +40,27 @@
 @using (Html.BeginForm())
 {
 
-    <div id="cuerpo">
-        <div style="width:100%">
-            <div id="dselector">
-                <fieldset>
-                    <legend>Temas</legend>
-                    <div style="padding-bottom:10px;display:none">
-                        <input type="text" id="tema" name="tema" />
+<div class="row" id="cuerpo">
+    <h1>Búsqueda de libros por temática</h1>
+        <div id="dselector">
+            <fieldset>
+                <legend>Temas</legend>
+                <div style="padding-bottom:10px;display:none">
+                    <input type="text" id="tema" name="tema" />
+                </div>
+                <div class="borde-inferior" style="padding-bottom:10px">
+                    @Html.DropDownList("temas")
+                </div>
+                <div class="form-group" style="display:none">
+                    <div class="col-md-offset-2 col-md-10" align="left">
+                        <input type="submit" value="Ver Libros" class="btn-default btn" id="bSubmit" />
                     </div>
-                    <div class="borde-inferior" style="padding-bottom:10px">
-                        @Html.DropDownList("temas")
-                    </div>
-                    <div class="form-group" style="display:none">
-                        <div class="col-md-offset-2 col-md-10" align="left">
-                            <input type="submit" value="Ver Libros" class="btn-default btn" id="bSubmit" />
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-
-            <div id="dtable" align="center">
-
-            </div>
+                </div>
+            </fieldset>
         </div>
-    </div>
+
+        <div id="dtable" align="center">
+
+        </div>
+</div>
 }

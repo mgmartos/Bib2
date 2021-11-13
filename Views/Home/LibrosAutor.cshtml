@@ -51,7 +51,7 @@
 <h2>Libros de @ViewData["NomAutor"]</h2>
 
 
-<div id="Principal" style="">
+<div id="Principal" class="row">
 
     <div class="modal fade col-12" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -77,7 +77,8 @@
 
 
     <div id="divLibros">
-        <table id="tLibros" style="width:90%; border:thin" align="center">
+        <h1>Libros del autor @ViewData["NomAutor"].ToString()</h1>
+        <table id="tLibros" style="width:90%; border:thin; margin-bottom:10px;margin-top:10px" align="left">
             <tr>
                 <th style="width:5.00%">Código</th>
                 <th style="width:70.00%">Título</th>

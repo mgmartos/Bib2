@@ -16,11 +16,14 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Bib2.Models;
 using Bib2.Library;
+using System.Threading.Tasks;
+
 namespace Bib2.Controllers
 {
     public class HomeController : Controller
     {
         private static string Token = "";
+        private static int IToken = 0;
         //string WSRest = "http://localhost:1722/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
         //string WSRest = "http://localhost/WebApi/api/";// System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
         string WSRest = System.Web.Configuration.WebConfigurationManager.AppSettings["RestWS"].ToString();
@@ -257,7 +260,7 @@ namespace Bib2.Controllers
             return View(lecturas);
         }
 
-        public ActionResult ListaLecturas2(int id=0, int Registros=20)
+        public ActionResult ListaLecturas2(int id=0, int Registros=25)
         {
             var request = (HttpWebRequest)WebRequest.Create(WSRest + "lecturas/todos");
             string json = GetWS(request);
@@ -315,50 +318,90 @@ namespace Bib2.Controllers
         }
 
 
-        public ActionResult Libros(string letra = "#")
+        public async Task<ActionResult> Libros(string letra = "#")
         {
-            string ret = PostWS("biblos/LibrosLetra", "letra=" + letra.ToString());
-            JArray jsonArray = JArray.Parse(ret);
-            //List<mlibU> libros = jsonArray.ToObject<List<mlibU>>();
             List<mlibU> libros = new List<mlibU>();
-            for (int i = 0; i < jsonArray.Count; i++)
+
+            if (letra != "?")
             {
-                mlib l = jsonArray[i]["c"].ToObject<mlib>();
-                mlibU u = new mlibU();
-                u.libro = l;
-                int nums = 0;
-                int.TryParse(jsonArray[i]["urls"].ToString(), out nums);
-                u.numurls = nums;
-                libros.Add(u);
+                //string ret = PostWS("biblos/LibrosLetra", "letra=" + letra.ToString());
+                string ret =  await PostWS_Async("biblos/LibrosLetra", "letra=" + letra.ToString());
+                JArray jsonArray = JArray.Parse(ret);
+                for (int i = 0; i < jsonArray.Count; i++)
+                {
+                    mlib l = jsonArray[i]["c"].ToObject<mlib>();
+                    mlibU u = new mlibU();
+                    u.libro = l;
+                    int nums = 0;
+                    int.TryParse(jsonArray[i]["urls"].ToString(), out nums);
+                    u.numurls = nums;
+                    libros.Add(u);
+                }
+            }
+            else
+            {
+                var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/listatodos");
+                string json = GetWS(request);
+                JArray jsonArray = JArray.Parse(json);
+                for (int i = 0; i < jsonArray.Count; i++)
+                {
+                    mlib l = jsonArray[i]["c"].ToObject<mlib>();
+                    mlibU u = new mlibU();
+                    u.libro = l;
+                    int nums = 0;
+                    int.TryParse(jsonArray[i]["urls"].ToString(), out nums);
+                    u.numurls = nums;
+                    libros.Add(u);
+                }
             }
             return View(libros);
         }
-        public ActionResult LibrosP(string letra = "#", int id = 0, int Registros = 25)
+        public async Task<ActionResult> LibrosP(string letra = "#", int id = 0, int Registros = 25)
         {
-            string ret = PostWS("biblos/LibrosLetra", "letra=" + letra.ToString());
-            JArray jsonArray = JArray.Parse(ret);
-            //List<mlibU> libros = jsonArray.ToObject<List<mlibU>>();
             List<mlibU> libros = new List<mlibU>();
-            for (int i = 0; i < jsonArray.Count; i++)
+            if (letra != "?")
             {
-                mlib l = jsonArray[i]["c"].ToObject<mlib>();
-                mlibU u = new mlibU();
-                u.libro = l;
-                int nums = 0;
-                int.TryParse(jsonArray[i]["urls"].ToString(), out nums);
-                u.numurls = nums;
-                libros.Add(u);
+                string ret = await PostWS_Async("biblos/LibrosLetra", "letra=" + letra.ToString());
+                JArray jsonArray = JArray.Parse(ret);
+                for (int i = 0; i < jsonArray.Count; i++)
+                {
+                    mlib l = jsonArray[i]["c"].ToObject<mlib>();
+                    mlibU u = new mlibU();
+                    u.libro = l;
+                    int nums = 0;
+                    int.TryParse(jsonArray[i]["urls"].ToString(), out nums);
+                    u.numurls = nums;
+                    libros.Add(u);
+                }
             }
-            //return View(libros);
-            var url = System.Web.HttpContext.Current.Request.Url.Host;
-            var objects = new Bib2.Library.LPaginador<mlibU>().paginador(libros, id, Registros, "Home", "LibrosP", url,letra);
-            models_mlibu = new DataPaginador<mlibU>
+            else
             {
-                List = (List<mlibU>)objects[2],
-                Pagi_info = (String)objects[0],
-                Pagi_navegacion = (String)objects[1],
-                Input = new mlibU()
-            };
+                var request = (HttpWebRequest)WebRequest.Create(WSRest + "biblos/listatodos");
+                string json = GetWS(request);
+                JArray jsonArray = JArray.Parse(json);
+                for (int i = 0; i < jsonArray.Count; i++)
+                {
+                    mlib l = jsonArray[i]["c"].ToObject<mlib>();
+                    mlibU u = new mlibU();
+                    u.libro = l;
+                    int nums = 0;
+                    int.TryParse(jsonArray[i]["urls"].ToString(), out nums);
+                    u.numurls = nums;
+                    libros.Add(u);
+                }
+                libros = libros.OrderBy(l => l.libro.titulo).ToList(); 
+            }
+                //return View(libros);
+                var url = System.Web.HttpContext.Current.Request.Url.Host;
+                var objects = new Bib2.Library.LPaginador<mlibU>().paginador(libros, id, Registros, "Home", "LibrosP", url, letra);
+                models_mlibu = new DataPaginador<mlibU>
+                {
+                    List = (List<mlibU>)objects[2],
+                    Pagi_info = (String)objects[0],
+                    Pagi_navegacion = (String)objects[1],
+                    Input = new mlibU()
+                };
+
             return View(models_mlibu);
 
 
@@ -407,6 +450,18 @@ namespace Bib2.Controllers
             ViewData["tipo"] = tipo.ToString();
             return PartialView();
         }
+
+
+        public PartialViewResult _Comentario(string titulo)
+        {
+            string lec = PostWS("lecturas/Getlectura", "letra=" + titulo.ToString());
+            JObject js = JObject.Parse(lec);
+            Lecturas lectura = js.ToObject<Lecturas>();
+            return PartialView(lectura);
+        }
+
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -577,24 +632,84 @@ namespace Bib2.Controllers
         public string PostWS(string ruta, string param)
         {
             string retorno = "";
+            HttpWebResponse response = null;
             if (Token.Length <= 0)
                 ObtenerToken();
             HttpWebRequest request = WebRequest.Create(WSRest + ruta) as HttpWebRequest;
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.Headers.Add("Authorization", "Bearer " + Token);
-           // byte[] byteArray = System.Text.Encoding.UTF8.GetBytes("letra=" + param);
-            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes( param);
+            // byte[] byteArray = System.Text.Encoding.UTF8.GetBytes("letra=" + param);
+            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(param);
             request.ContentLength = byteArray.Length;
             Stream dataStream = request.GetRequestStream();
             {
                 dataStream.Write(byteArray, 0, byteArray.Length);
             }
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            try
+            {
+                response = request.GetResponse() as HttpWebResponse;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.ToString().Contains("401"))
+                {
+                    IToken++;
+                    ObtenerToken();
+                    PostWS(ruta, param);
+                }
+                else
+                {
+                    IToken = 0;
+                }
+            }
             using (StreamReader reader = new StreamReader(response.GetResponseStream()))
             {
                 retorno = reader.ReadToEnd();
-                
+
+            }
+            return retorno;
+        }
+        public async Task<string> PostWS_Async(string ruta, string param)
+        {
+            string retorno = "";
+            HttpWebResponse response = null;
+            if (Token.Length <= 0) 
+            { 
+            await ObtenerTokenAsync();
+            }
+            HttpWebRequest request = WebRequest.Create(WSRest + ruta) as HttpWebRequest;
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.Headers.Add("Authorization", "Bearer " + Token);
+            // byte[] byteArray = System.Text.Encoding.UTF8.GetBytes("letra=" + param);
+            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(param);
+            request.ContentLength = byteArray.Length;
+            Stream dataStream = request.GetRequestStream();
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+            }
+            try
+            {
+                response = await request.GetResponseAsync() as HttpWebResponse;
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.ToString().Contains("401"))
+                {
+                    IToken++;
+                    await ObtenerTokenAsync();
+                    await PostWS_Async(ruta, param);
+                }
+                else
+                {
+                    IToken = 0;
+                }
+            }
+            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            {
+                retorno =  reader.ReadToEnd();
+
             }
             return retorno;
         }
@@ -621,6 +736,37 @@ namespace Bib2.Controllers
 
 
             HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+            using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+            {
+                Token = reader.ReadToEnd();
+                Token = Token.Substring(1, Token.Length - 2);
+            }
+            //Token = Token.Substring(1);
+            //Token = Token.Substring(0, Token.Length - 1);
+        }
+
+        private async Task ObtenerTokenAsync()
+        {
+            HttpWebRequest request = WebRequest.Create(WSRest + "login/authenticate") as HttpWebRequest;
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+
+            // Metodo modificado
+            string postData = "username=mgmartos&password=trijaka&grant_type=password";
+            byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
+            request.ContentLength = byteArray.Length;
+            //using (
+            Stream dataStream = request.GetRequestStream();
+            {
+                //using (StreamWriter stmw = new StreamWriter(dataStream))
+                //{
+                //    stmw.Write(postData);
+                //}
+                dataStream.Write(byteArray, 0, byteArray.Length);
+            }
+
+
+            HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
             using (StreamReader reader = new StreamReader(response.GetResponseStream()))
             {
                 Token = reader.ReadToEnd();

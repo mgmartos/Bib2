@@ -131,7 +131,7 @@
         $(".loader").fadeOut("slow");
     });
 </script>
-@*<div class="loader" align="center"><img src="~/img/cargando.png" height="50%" width="50%" /></div>*@
+@*<div class="loader" align="center"><img src="~/img/cargando.png"/></div>*@
 
 
 <h2>Libros</h2>
@@ -148,7 +148,7 @@
         </div>
     </div>
 
-    <div id="Iniciales" align="center" style="padding-left: 9%;">
+    <div id="Iniciales" align="center" style="padding-left: 7%;">
 
 
         <fieldset>
@@ -156,7 +156,7 @@
                 @{
                     <li class="horizontal">
                         <a>
-                            @Html.ActionLink("#", "Libros", new { letra = "#" })
+                            @Html.ActionLink("#", "LibrosP", new { letra = "#" })
                         </a>
                     </li>
                     for (char c = 'A'; c <= 'Z'; c++)
@@ -167,13 +167,19 @@
                             </a>
                         </li>
                     }
+                    <li class="horizontal">
+                        <a>
+                            @Html.ActionLink("?","LibrosP", new { letra = "?",id=0,Registros =100 })
+                        </a>
+                    </li>
                 }
             </ul>
         </fieldset>
     </div>
+    @*<div style="width:100%; padding-bottom:1em" align="center"><i class='fas fa-book fa-border fa-5x' ></i><br /></div>*@
     <div id="ListaLibros" align="center">
 
-        <div class="loader" style="width:100%; border:thin;padding-top:50px" align="center"><img src="~/img/cargando.png" height="50%" width="50%" /></div>
+        <div class="loader" style="width:100%; border:thin;padding-top:50px" align="center"><img src="~/img/cargando.png" /></div>
 
         <table id="tLibros" style="width:80%; border:thin" align="center">
             <tr>
